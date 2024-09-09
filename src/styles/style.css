@@ -1,3 +1,5 @@
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -o-font-smoothing: antialiased; }
+
 #loop-swiper-1 .swiper-wrapper,
 #loop-swiper-2 .swiper-wrapper {
   transition-timing-function: linear !important;

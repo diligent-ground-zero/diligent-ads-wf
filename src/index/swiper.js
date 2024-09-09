@@ -2,7 +2,6 @@ import gsap from 'gsap'
 // import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import Flip from 'gsap/Flip'
 import ScrollTrigger from 'gsap/ScrollTrigger'
-import SplitType from 'split-type'
 import Swiper from 'swiper'
 import {
   Navigation,
@@ -153,188 +152,90 @@ export const splitTextAnimation = () => {
     const introContent = document.querySelector('.section_intro')
     const panels = gsap.utils.toArray('.intro_content')
     const section_ads_first = document.querySelector('.section_ads_first')
-    // const adsRows = document.querySelectorAll('.ads_row')
     // const section_ads = document.querySelector('.section_ads')
 
     const adsInSecond = gsap.utils.toArray('.section_ads .ads_image')
 
-    // const adsExceptFourth = adsInSecond.filter((_, index) => index !== 3)
+    const adsExceptFourth = adsInSecond.filter((_, index) => index !== 3)
 
-    // gsap.set(adsExceptFourth, {
-    //   autoAlpha: 0,
-    // })
+    gsap.set(adsExceptFourth, { opacity: 0 })
 
     gsap.set(adsInSecond[3], {
       position: 'absolute',
       zIndex: (i) => 5 - i,
       scale: (i) => {
-        return i > 0 ? 1.2 : 1.3
+        return i > 0 ? 1.2 : 1.4
       },
-      y: -500,
+      y: window.innerWidth > 920 ? -500 : -50,
     })
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: section_ads_first,
-        start: 'top top',
+        start: 'top',
         end: 'bottom',
-        markers: true,
-        scrub: true,
+        scrub: 1,
       },
     })
 
     tl.to(adsInSecond[3], {
       y: 0,
       scale: 1,
+      ease: 'power1.out',
+      duration: 2,
     })
 
-    // tl.to(adsExceptFourth, {
-    //   autoAlpha: 1,
-    // })
-    // const state = Flip.getState(firstFiveAds)
+    tl.to(
+      adsExceptFourth,
+      {
+        y: 0,
+        opacity: 1,
+      },
+      '-=1'
+    )
 
-    // gsap.set(firstFiveAds, {
-    //   position: 'relative',
-    // })
-
-    // Flip.from(state, { duration: 2, ease: 'power1.inOut' })
-
-    // if (adsRows.length >= 2) {
-    //   const firstRow = adsRows[0]
-    //   if (firstRow.children.length >= 3) {
-    //     const thirdAd = firstRow.children[2].cloneNode(true)
-    //     section_ads_first.appendChild(thirdAd)
-    //   }
-    // }
-
-    // gsap.set(adsInSecond, { autoAlpha: 0 })
-
-    // const tl = gsap.timeline({
-    //   scrollTrigger: {
-    //     trigger: section_ads_first,
-    //     start: 'top top',
-    //     end: 'bottom',
-    //     markers: true,
-    //   },
-    // })
-
-    // tl.to(section_ads_first.children[0], {
-    //   y: '160%',
-    // })
-
-    // tl.to(
-    //   section_ads_first.children[0],
-    //   {
-    //     autoAlpha: 0,
-    //   },
-    //   '+=0.25'
-    // )
-
-    // tl.to(
-    //   adsInSecond.filter((_, index) => index !== 2),
-    //   { autoAlpha: 1, y: 0 }
-    // )
-
-    // tl.to(
-    //   adsInSecond.filter((_, index) => index === 2),
-    //   { autoAlpha: 1, y: 0 },
-    //   '-=0.5'
-    // )
-
-    // tl.to(section_ads, { autoAlpha: 1 }, '-=0.5')
-
-    // const tl2 = gsap.timeline({
-    //   scrollTrigger: {
-    //     trigger: section_ads,
-    //     start: 'top',
-    //     end: 'bottom',
-    //     scrub: true,
-    //   },
-    // })
-
-    // tl2.to(section_ads, { autoAlpha: 1 })
-
-    panels.forEach((panel, i) => {
-      const splitWord = panel.querySelector('.split-word')
-
-      if (splitWord) {
-        // Split text into characters
-        const text = new SplitType(splitWord, { types: 'words, chars' })
-
-        // Set initial state for characters
-        gsap.set(text.chars, {
-          opacity: 0,
-          y: 20,
-        })
-
-        // Create timeline for panel animation
-        const tl = gsap.timeline({
-          scrollTrigger: {
-            trigger: introContent,
-            start: 'top+=' + 100 * i + '%' + ' 20%',
-            end: 'top+=' + 100 * (i + 1) + '%' + ' top',
-            scrub: true,
-            toggleActions: 'play reverse play reverse',
-          },
-        })
-
-        // Animate panel and characters
-        tl.to(panel, { opacity: 1, duration: 0.5 }).to(
-          text.chars,
-          {
-            opacity: 1,
-            y: 0,
-            duration: 0.5,
-            stagger: 0.02,
-          },
-          '<'
-        )
-
-        if (i < panels.length - 1) {
-          tl.to(panel, { opacity: 0, duration: 0.5 }, '+=0.5').to(
-            text.chars,
-            {
-              opacity: 0,
-              y: -20,
-              duration: 0.5,
-              stagger: 0.02,
-            },
-            '<'
-          )
-        }
-      }
+    tl.to(adsInSecond.splice(0, 6), {
+      x: '50px',
+      duration: 2,
     })
 
-    ScrollTrigger.create({
-      trigger: introContent,
-      start: 'top 35%',
-      end: '+=' + panels.length * 100 + '%',
-      pin: true,
-    })
+    tl.to(
+      adsInSecond.slice(-5),
+      {
+        x: '-50px',
+        duration: 2,
+      },
+      '<'
+    )
 
-    // ScrollTrigger.create({
-    //   trigger: section_ads,
-    //   start: 'top 50%',
-    //   end: introContent,
-    //   markers: true,
-    // })
-
-    setupVideoAutoplay()
-    function setupVideoAutoplay() {
-      const videoWrapper = document.querySelector('#first_video')
-      const video = videoWrapper?.querySelector('video')
-
-      if (!video) return
-
-      ScrollTrigger.create({
-        trigger: videoWrapper,
-        start: 'top 80%',
-        end: 'bottom 20%',
-        onEnter: () => video.play(),
-        onLeave: () => video.pause(),
-        onEnterBack: () => video.play(),
-        onLeaveBack: () => video.pause(),
+    panels.forEach((panel) => {
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: introContent,
+          start: 'top top',
+          toggleActions: 'play reverse play reverse',
+        },
       })
-    }
+
+      tl.to(panel, { opacity: 1, duration: 0.5 })
+    })
+
+    // setupVideoAutoplay()
+    // function setupVideoAutoplay() {
+    //   const videoWrapper = document.querySelector('#first_video')
+    //   const video = videoWrapper?.querySelector('video')
+
+    //   if (!video) return
+
+    //   ScrollTrigger.create({
+    //     trigger: videoWrapper,
+    //     start: 'top 80%',
+    //     end: 'bottom 20%',
+    //     onEnter: () => video.play(),
+    //     onLeave: () => video.pause(),
+    //     onEnterBack: () => video.play(),
+    //     onLeaveBack: () => video.pause(),
+    //   })
+    // }
   }
 }
