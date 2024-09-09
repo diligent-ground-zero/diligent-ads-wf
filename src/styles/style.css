@@ -1,22 +1,43 @@
-.js-badge {
-  position: fixed;
-  top: 32px;
-  left: 32px;
-  border-radius: 16px;
-  background-color: lightblue;
-  color: black;
-  padding: 8px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-  line-height: 1.2;
-  font-size: 14px;
-  cursor: pointer;
-  z-index: 10000;
-  transition: background-color .1s ease-out;
+#loop-swiper-1 .swiper-wrapper,
+#loop-swiper-2 .swiper-wrapper {
+  transition-timing-function: linear !important;
 }
 
-.js-badge:hover {
-  background-color: rgb(228, 137, 193);
+
+#faq .faq_accordion .faq_answer {
+  max-height: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: max-height 0.6s ease-in-out, opacity 0.6s ease-in-out;
+}
+
+#faq .faq_accordion.open .faq_answer {
+  max-height: 500px; /* Adjust this value based on your content */
+  transition: max-height 1.2s ease-in-out,  opacity 1.2s ease-in-out;
+  opacity:1;
+}
+
+/* Optional: Add transition to the question for a smoother effect */
+#faq .faq_accordion .faq_question {
+  transition: color 1.2s ease-in-out;
+}
+
+#faq .arrow_circle svg {
+  transform-origin: center;
+}
+
+.split-word span {
+  position: absolute;
+  top:0;
+  left:0;
+  height: 100%;
+  width: 100%;
+  color:#1f1f1f;
+  text-align: left;
+  clip-path: inset(0% 100% 0% 0%);
+}
+
+.split-word .word,
+.split-word .char {
+  font-kerning: none;
 }

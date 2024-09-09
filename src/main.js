@@ -1,8 +1,5 @@
-import animateTitle from './features/animateTitle'
-import createBadge from './features/createBasge'
-import './styles/style.css'
+import { initHomeSwipers, initFaqs, splitTextAnimation } from './index/swiper'
 
-console.log('Welcome to Vite + JS + Webflow!')
-
-createBadge()
-animateTitle()
+initHomeSwipers()
+initFaqs()
+splitTextAnimation()
