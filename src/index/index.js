@@ -1,3 +1,4 @@
+import PureCounter from '@srexi/purecounterjs'
 import gsap from 'gsap'
 // import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -9,6 +10,8 @@ import {
   EffectCards,
   EffectFade,
 } from 'swiper/modules'
+
+import { horizontalLoop } from '../utils/scroller'
 
 import '../styles/style.css'
 import 'swiper/css'
@@ -152,6 +155,18 @@ function closeOtherFaqs(clickedItem, allItems) {
 export const splitTextAnimation = () => {
   if (window.innerWidth > 992) {
     createAnimation()
+  } else {
+    gsap.utils
+      .toArray('.section_ads_animation_wrapper .ads_row')
+      .forEach((line, index) => {
+        const speed = 0.08 // (in pixels per second)
+
+        horizontalLoop(line, {
+          speed: speed,
+          reversed: index === 0,
+          repeat: -1,
+        })
+      })
   }
   function createAnimation() {
     const introContent = document.querySelector('.section_intro')
@@ -163,8 +178,12 @@ export const splitTextAnimation = () => {
     const adsExceptFourth = adsInSecond.filter((_, index) => index !== 3)
 
     gsap.set(adsExceptFourth, { opacity: 0 })
+    const ele = createBackgroundDiv(
+      'right',
+      document.querySelector('.ads_image.hidden')
+    )
 
-    gsap.set(adsInSecond[3], {
+    gsap.set(gsap.utils.toArray([adsInSecond[3], ele]), {
       position: 'absolute',
       zIndex: (i) => 5 - i,
       scale: (i) => {
@@ -199,15 +218,15 @@ export const splitTextAnimation = () => {
     )
 
     tl.to(adsInSecond.splice(0, 6), {
-      x: '50px',
-      duration: 2,
+      x: '100px',
+      duration: 4,
     })
 
     tl.to(
       adsInSecond.slice(-5),
       {
-        x: '-50px',
-        duration: 2,
+        x: '-100px',
+        duration: 4,
       },
       '<'
     )
@@ -244,10 +263,65 @@ export const splitTextAnimation = () => {
   }
 }
 
+function createBackgroundDiv(side, parent) {
+  const div = document.createElement('div')
+  div.className = `black-bg ${side}`
+  div.style.cssText = `
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    ${side}: -20%;
+    width: 20%;
+    background-color: black;
+    z-index: 1;
+  `
+  parent.appendChild(div)
+  return div
+}
+
+export const initCounter = () => {
+  new PureCounter({
+    // Setting that can't' be overriden on pre-element
+    selector: '.subs', // HTML query selector for spesific element
+
+    // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
+    start: 0, // Starting number [unit]
+    end: 740, // End number [unit]
+    duration: 2, // The time in seconds for the animation to complete [seconds]
+    delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
+    once: true, // Counting at once or recount when the element in view [boolean]
+    repeat: false, // Repeat count for certain time [boolean:false|seconds]
+    decimals: 0, // How many decimal places to show. [unit]
+    legacy: true, // If this is true it will use the scroll event listener on browsers
+    filesizing: false, // This will enable/disable File Size format [boolean]
+    currency: false, // This will enable/disable Currency format. Use it for set the symbol too [boolean|char|string]
+    separator: false, // This will enable/disable comma separator for thousands. Use it for set the symbol too [boolean|char|string]
+  })
+
+  new PureCounter({
+    // Setting that can't' be overriden on pre-element
+    selector: '.visitors', // HTML query selector for spesific element
+
+    // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
+    start: 0, // Starting number [unit]
+    end: 70, // End number [unit]
+    duration: 2, // The time in seconds for the animation to complete [seconds]
+    delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
+    once: true, // Counting at once or recount when the element in view [boolean]
+    repeat: false, // Repeat count for certain time [boolean:false|seconds]
+    decimals: 0, // How many decimal places to show. [unit]
+    legacy: true, // If this is true it will use the scroll event listener on browsers
+    filesizing: false, // This will enable/disable File Size format [boolean]
+    currency: false, // This will enable/disable Currency format. Use it for set the symbol too [boolean|char|string]
+    separator: false, // This will enable/disable comma separator for thousands. Use it for set the symbol too [boolean|char|string]
+  })
+}
+
 export const langaugeToggle = () => {
   // Get the price paragraph elements
   const basicPriceElement = document.getElementById('basic-package-price')
   const betterPriceElement = document.getElementById('better-package-price')
+  const discount = document.getElementById('discount')
 
   // Get the currency toggle buttons
   const euroButton = document.querySelector('#euro')
@@ -257,12 +331,14 @@ export const langaugeToggle = () => {
   // Set the initial prices (you can adjust these values)
   const prices = {
     euro: {
-      basic: 1500,
-      better: 2900,
+      basic: 1350,
+      better: 2650,
+      discount: 387,
     },
     usd: {
       basic: 1500,
       better: 2900,
+      discount: 475,
     },
   }
 
@@ -271,9 +347,11 @@ export const langaugeToggle = () => {
     const currencySymbol = currency === 'euro' ? 'EUR' : 'USD'
     const basicPrice = prices[currency].basic
     const betterPrice = prices[currency].better
+    const discountValue = prices[currency].discount
 
     basicPriceElement.textContent = `${basicPrice} ${currencySymbol}`
     betterPriceElement.textContent = `${betterPrice} ${currencySymbol}`
+    discount.textContent = `You save: ${discountValue} ${currencySymbol}`
   }
 
   // Add click event listener to the toggle button
