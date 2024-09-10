@@ -429,18 +429,6 @@ export function initNavigation() {
   // Create a blurry background element
   const blurryBg = document.createElement('div')
   blurryBg.classList.add('blurry-bg')
-  blurryBg.style.cssText = `
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    backdrop-filter: blur(10px);
-    background-color: rgba(0, 0, 0, 0);
-    opacity: 0;
-    pointer-events: none;
-    z-index: 998;
-  `
   document.body.appendChild(blurryBg)
 
   // Create a container for centered menu items
