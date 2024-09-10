@@ -208,35 +208,33 @@ export const splitTextAnimation = () => {
 
     const adsInSecond = gsap.utils.toArray('.section_ads .ads_image')
 
-    const cta_section = document.querySelector('.section_cta .cta_content')
-    const firstFiveAds = adsInSecond.slice(-3)
-    firstFiveAds.forEach((ad, index) => {
-      const clone = ad.cloneNode(true)
-      clone.style.position = 'absolute'
+    // const cta_section = document.querySelector('.section_cta .cta_content')
+    // const firstFiveAds = adsInSecond.slice(-3)
+    // firstFiveAds.forEach((ad, index) => {
+    //   const clone = ad.cloneNode(true)
+    //   clone.style.position = 'absolute'
 
-      // Generate random coordinates
-      const x = index * 30 // 10% to 90% of container width
-      const y = 20 // 10% to 90% of container height
+    //   const x = index * 30
+    //   const y = 20
 
-      clone.style.left = `${x}%`
-      clone.style.top = `${y}%`
-      clone.style.transform = 'translate(0%, 75%) scale(0.8)' // Center the ad and make it smaller
-      clone.style.zIndex = '1' // Ensure ads are behind the content
+    //   clone.style.left = `${x}%`
+    //   clone.style.top = `${y}%`
+    //   clone.style.transform = 'translate(0%, 75%) scale(0.8)'
+    //   clone.style.zIndex = '1'
 
-      cta_section.querySelector('.cta_images').appendChild(clone)
+    //   cta_section.querySelector('.cta_images').appendChild(clone)
 
-      // Create floating animation
-      gsap.to(clone, {
-        y: '+=20',
-        x: '+=10',
-        rotation: Math.random() * 10 - 5, // Rotate between -5 and 5 degrees
-        duration: 3 + Math.random() * 2, // Duration between 3 and 5 seconds
-        repeat: -1,
-        yoyo: true,
-        opacity: 0.8,
-        ease: 'sine.inOut',
-      })
-    })
+    //   gsap.to(clone, {
+    //     y: '+=20',
+    //     x: '+=10',
+    //     rotation: Math.random() * 10 - 5, // Rotate between -5 and 5 degrees
+    //     duration: 3 + Math.random() * 2, // Duration between 3 and 5 seconds
+    //     repeat: -1,
+    //     yoyo: true,
+    //     opacity: 0.8,
+    //     ease: 'sine.inOut',
+    //   })
+    // })
 
     const adsExceptFourth = adsInSecond.filter((_, index) => index !== 3)
 
@@ -480,9 +478,14 @@ export function initNavigation() {
   navButton.addEventListener('click', toggleMenu)
 
   // Clone nav links to centered menu
-  navLinks.forEach((link) => {
+  navLinks.forEach((link, index) => {
     const clonedLink = link.cloneNode(true)
     centeredMenu.appendChild(clonedLink)
+
+    if (index === navLinks.length - 1) {
+      clonedLink.classList.add('alternative')
+    }
+
     clonedLink.addEventListener('click', () => {
       toggleMenu()
     })
