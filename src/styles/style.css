@@ -10,18 +10,18 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
   max-height: 0;
   overflow: hidden;
   opacity: 0;
-  transition: max-height 0.6s ease-in-out, opacity 0.6s ease-in-out;
+  transition: max-height 0.6s ease-out, opacity 0.6s ease-out;
 }
 
 #faq .faq_accordion.open .faq_answer {
   max-height: 500px; /* Adjust this value based on your content */
-  transition: max-height 1.2s ease-in-out,  opacity 1.2s ease-in-out;
+  transition: max-height 0.6s ease-out,  opacity 0s ease-out;
   opacity:1;
 }
 
 /* Optional: Add transition to the question for a smoother effect */
 #faq .faq_accordion .faq_question {
-  transition: color 1.2s ease-in-out;
+  transition: color 0.6s ease-in-out;
 }
 
 #faq .arrow_circle svg {

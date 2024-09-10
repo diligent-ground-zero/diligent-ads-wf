@@ -1,6 +1,5 @@
 import gsap from 'gsap'
 // import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Flip from 'gsap/Flip'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import Swiper from 'swiper'
 import {
@@ -19,25 +18,30 @@ import 'swiper/css/effect-cards'
 import 'swiper/css/effect-fade'
 
 gsap.registerPlugin(ScrollTrigger)
-gsap.registerPlugin(Flip)
 
 export const initHomeSwipers = () => {
-  new Swiper('#loop-swiper-1, #loop-swiper-2', {
+  const swiperLoopOptions = {
     spaceBetween: 20,
-    grabCursor: false,
-    a11y: false,
-    freeMode: false,
     loop: true,
     allowTouchMove: false,
-    slidesPerView: '3',
-    modules: [Autoplay],
+    slidesPerView: '4',
     centeredSlides: true,
+    modules: [Autoplay],
     autoplay: {
+      delay: 0,
       pauseOnMouseEnter: false,
       disableOnInteraction: false,
     },
+    breakpoints: {
+      992: {
+        slidesPerView: '3',
+      },
+    },
     speed: 5000,
-  })
+  }
+  new Swiper('#loop-swiper-1', swiperLoopOptions)
+
+  new Swiper('#loop-swiper-2', swiperLoopOptions)
 
   const photoSwiper = new Swiper('.swiper.is-photos', {
     effect: 'cards',
@@ -146,13 +150,13 @@ function closeOtherFaqs(clickedItem, allItems) {
 }
 
 export const splitTextAnimation = () => {
-  createAnimation()
-
+  if (window.innerWidth > 992) {
+    createAnimation()
+  }
   function createAnimation() {
     const introContent = document.querySelector('.section_intro')
     const panels = gsap.utils.toArray('.intro_content')
     const section_ads_first = document.querySelector('.section_ads_first')
-    // const section_ads = document.querySelector('.section_ads')
 
     const adsInSecond = gsap.utils.toArray('.section_ads .ads_image')
 
@@ -238,4 +242,53 @@ export const splitTextAnimation = () => {
     //   })
     // }
   }
+}
+
+export const langaugeToggle = () => {
+  // Get the price paragraph elements
+  const basicPriceElement = document.getElementById('basic-package-price')
+  const betterPriceElement = document.getElementById('better-package-price')
+
+  // Get the currency toggle buttons
+  const euroButton = document.querySelector('#euro')
+  const dollarButton = document.querySelector('#dollar')
+  const currencyToggle = document.querySelector('#currency_toggle')
+
+  // Set the initial prices (you can adjust these values)
+  const prices = {
+    euro: {
+      basic: 1500,
+      better: 2900,
+    },
+    usd: {
+      basic: 1500,
+      better: 2900,
+    },
+  }
+
+  // Function to update the price text
+  function updatePrices(currency) {
+    const currencySymbol = currency === 'euro' ? 'EUR' : 'USD'
+    const basicPrice = prices[currency].basic
+    const betterPrice = prices[currency].better
+
+    basicPriceElement.textContent = `${basicPrice} ${currencySymbol}`
+    betterPriceElement.textContent = `${betterPrice} ${currencySymbol}`
+  }
+
+  // Add click event listener to the toggle button
+  currencyToggle.addEventListener('click', function () {
+    if (euroButton.classList.contains('active')) {
+      updatePrices('usd')
+      euroButton.classList.remove('active')
+      dollarButton.classList.add('active')
+    } else {
+      updatePrices('euro')
+      euroButton.classList.add('active')
+      dollarButton.classList.remove('active')
+    }
+  })
+
+  // Initialize with Euro prices
+  updatePrices('usd')
 }
