@@ -28,7 +28,7 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
   transform-origin: center;
 }
 
-.split-word span {
+/* .split-word span {
   position: absolute;
   top:0;
   left:0;
@@ -42,4 +42,4 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 .split-word .word,
 .split-word .char {
   font-kerning: none;
-}
+} */

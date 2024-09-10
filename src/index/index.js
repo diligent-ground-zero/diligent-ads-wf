@@ -160,7 +160,6 @@ export const splitTextAnimation = () => {
       .toArray('.section_ads_animation_wrapper .ads_row')
       .forEach((line, index) => {
         const speed = 0.08 // (in pixels per second)
-
         horizontalLoop(line, {
           speed: speed,
           reversed: index === 0,
@@ -168,9 +167,41 @@ export const splitTextAnimation = () => {
         })
       })
   }
+
+  const panels = gsap.utils.toArray('.intro_content')
+  panels.forEach((panel) => {
+    gsap.set(panel, { opacity: 0, y: 40 })
+    const tl2 = gsap.timeline({
+      scrollTrigger: {
+        trigger: panel,
+        start: 'top bottom',
+        end: 'bottom',
+        // scrub: 1,
+      },
+    })
+    tl2.to(panel, { opacity: 1, y: 0, delay: 0.5 })
+
+    setupVideoAutoplay()
+    function setupVideoAutoplay() {
+      const videos = gsap.utils.toArray('.step_video')
+
+      videos.forEach((video) => {
+        const videoInside = video.querySelector('video')
+        gsap.from(videoInside, {
+          scrollTrigger: {
+            trigger: videoInside,
+            start: 'top',
+          },
+          onEnter: () => {
+            videoInside.play()
+          },
+        })
+      })
+    }
+  })
+
   function createAnimation() {
-    const introContent = document.querySelector('.section_intro')
-    const panels = gsap.utils.toArray('.intro_content')
+    // const introContent = document.querySelector('.section_intro')
     const section_ads_first = document.querySelector('.section_ads_first')
 
     const adsInSecond = gsap.utils.toArray('.section_ads .ads_image')
@@ -231,35 +262,18 @@ export const splitTextAnimation = () => {
       '<'
     )
 
-    panels.forEach((panel) => {
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: introContent,
-          start: 'top top',
-          toggleActions: 'play reverse play reverse',
-        },
-      })
+    // gsap.set(panels, { opacity: 0, y: -20 })
 
-      tl.to(panel, { opacity: 1, duration: 0.5 })
-    })
-
-    // setupVideoAutoplay()
-    // function setupVideoAutoplay() {
-    //   const videoWrapper = document.querySelector('#first_video')
-    //   const video = videoWrapper?.querySelector('video')
-
-    //   if (!video) return
-
-    //   ScrollTrigger.create({
-    //     trigger: videoWrapper,
-    //     start: 'top 80%',
-    //     end: 'bottom 20%',
-    //     onEnter: () => video.play(),
-    //     onLeave: () => video.pause(),
-    //     onEnterBack: () => video.play(),
-    //     onLeaveBack: () => video.pause(),
-    //   })
-    // }
+    // const tl2 = gsap.timeline({
+    //   scrollTrigger: {
+    //     trigger: '.section_intro',
+    //     start: 'top start',
+    //     end: 'center',
+    //     markers: true,
+    //     scrub: 1,
+    //   },
+    // })
+    // tl2.to(panels, { opacity: 1, y: 0 })
   }
 }
 
