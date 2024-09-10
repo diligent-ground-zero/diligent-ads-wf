@@ -50,15 +50,15 @@ export const initHomeSwipers = () => {
     effect: 'cards',
     grabCursor: false,
     loop: true,
+    allowTouchMove: false,
     keyboard: false,
+    initialSlide: 1,
     modules: [Navigation, Controller, EffectCards],
     navigation: {
       nextEl: '.arrow.is-right',
       prevEl: '.arrow.is-left',
     },
     cardsEffect: {
-      perSlideOffset: 2,
-      perSlideRotate: 0,
       rotate: false,
       slideShadows: false,
     },
@@ -68,7 +68,9 @@ export const initHomeSwipers = () => {
   const contentSwiper = new Swiper('.swiper.is-content', {
     loop: true,
     followFinger: false,
+    allowTouchMove: false,
     effect: 'fade',
+    initialSlide: 1,
     fadeEffect: {
       crossFade: true,
     },
@@ -205,6 +207,36 @@ export const splitTextAnimation = () => {
     const section_ads_first = document.querySelector('.section_ads_first')
 
     const adsInSecond = gsap.utils.toArray('.section_ads .ads_image')
+
+    const cta_section = document.querySelector('.section_cta .cta_content')
+    const firstFiveAds = adsInSecond.slice(-3)
+    firstFiveAds.forEach((ad, index) => {
+      const clone = ad.cloneNode(true)
+      clone.style.position = 'absolute'
+
+      // Generate random coordinates
+      const x = index * 30 // 10% to 90% of container width
+      const y = 20 // 10% to 90% of container height
+
+      clone.style.left = `${x}%`
+      clone.style.top = `${y}%`
+      clone.style.transform = 'translate(0%, 75%) scale(0.8)' // Center the ad and make it smaller
+      clone.style.zIndex = '1' // Ensure ads are behind the content
+
+      cta_section.querySelector('.cta_images').appendChild(clone)
+
+      // Create floating animation
+      gsap.to(clone, {
+        y: '+=20',
+        x: '+=10',
+        rotation: Math.random() * 10 - 5, // Rotate between -5 and 5 degrees
+        duration: 3 + Math.random() * 2, // Duration between 3 and 5 seconds
+        repeat: -1,
+        yoyo: true,
+        opacity: 0.8,
+        ease: 'sine.inOut',
+      })
+    })
 
     const adsExceptFourth = adsInSecond.filter((_, index) => index !== 3)
 
@@ -383,4 +415,88 @@ export const langaugeToggle = () => {
 
   // Initialize with Euro prices
   updatePrices('usd')
+}
+
+export function initNavigation() {
+  const navButton = document.querySelector('.nav_button')
+  const hamburgerOpen = document.querySelector('.hamburger_open')
+  const hamburgerClose = document.querySelector('.hamburger_close')
+  const navMenu = document.querySelector('.nav_menu')
+  const navLinks = navMenu.querySelectorAll('a')
+  const parentWrap = document.querySelector('.nav_component')
+  let isOpen = false
+
+  // Create a blurry background element
+  const blurryBg = document.createElement('div')
+  blurryBg.classList.add('blurry-bg')
+  blurryBg.style.cssText = `
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    backdrop-filter: blur(10px);
+    background-color: rgba(0, 0, 0, 0);
+    opacity: 0;
+    pointer-events: none;
+    z-index: 998;
+  `
+  document.body.appendChild(blurryBg)
+
+  // Create a container for centered menu items
+  const centeredMenu = document.createElement('div')
+  centeredMenu.classList.add('centered-menu')
+  document.body.appendChild(centeredMenu)
+
+  function toggleMenu() {
+    isOpen = !isOpen
+
+    hamburgerOpen.classList.toggle('hide', isOpen)
+    hamburgerClose.classList.toggle('hide', !isOpen)
+
+    if (isOpen) {
+      // Open menu animation
+      gsap.to(blurryBg, { opacity: 1, duration: 0.3, pointerEvents: 'auto' })
+      parentWrap.style.backgroundImage = 'unset'
+      centeredMenu.style.display = 'flex'
+      gsap.fromTo(
+        centeredMenu,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.3, delay: 0.1 }
+      )
+
+      // Animate menu items
+      gsap.fromTo(
+        navLinks,
+        { opacity: 0, y: 20 },
+        { opacity: 1, y: 0, duration: 0.3, stagger: 0.1, delay: 0.2 }
+      )
+    } else {
+      // Close menu animation
+      gsap.to(blurryBg, { opacity: 0, duration: 0.3, pointerEvents: 'none' })
+      gsap.to(centeredMenu, {
+        opacity: 0,
+        y: 20,
+        duration: 0.3,
+        onComplete: () => {
+          centeredMenu.style.display = 'none'
+        },
+      })
+      gsap.to(parentWrap, {
+        backgroundImage:
+          'linear-gradient(#dcdbd7 18%, #dcdbd7ab 50%, #dcdbd700 71%)',
+      })
+    }
+  }
+
+  navButton.addEventListener('click', toggleMenu)
+
+  // Clone nav links to centered menu
+  navLinks.forEach((link) => {
+    const clonedLink = link.cloneNode(true)
+    centeredMenu.appendChild(clonedLink)
+    clonedLink.addEventListener('click', () => {
+      toggleMenu()
+    })
+  })
 }
