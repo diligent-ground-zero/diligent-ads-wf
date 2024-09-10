@@ -488,3 +488,17 @@ export function initNavigation() {
     })
   })
 }
+
+export const linkedinAdsConversion = () => {
+  const ctaButtons = document.querySelectorAll('a.cta_button_component')
+  ctaButtons.forEach((button) => {
+    button.addEventListener('click', () => {
+      // Check if LinkedIn Insight tag is available
+      if (window.lintrk) {
+        window.lintrk('track', { conversion_id: 14999516 })
+      } else {
+        console.warn('LinkedIn Insight tag is not available')
+      }
+    })
+  })
+}

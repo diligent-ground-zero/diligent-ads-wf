@@ -5,6 +5,7 @@ import {
   langaugeToggle,
   initCounter,
   initNavigation,
+  linkedinAdsConversion,
 } from './index'
 
 initHomeSwipers()
@@ -13,3 +14,4 @@ splitTextAnimation()
 langaugeToggle()
 initCounter()
 initNavigation()
+linkedinAdsConversion()
