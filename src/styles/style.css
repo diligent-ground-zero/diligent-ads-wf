@@ -77,3 +77,22 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
   text-align: center;
   justify-content: center;
 }
+
+#cc-main {
+  --cc-font-family: var(--main-font);
+  --cc-btn-primary-bg: var(--white);
+  --cc-btn-secondary-bg: var(--black);
+  --cc-btn-secondary-color: var(--background-color);
+  --cc-btn-secondary-border-color: var(--background-color);
+  --cc-btn-primary-hover-bg: var(--background-color);
+  --cc-btn-primary-border-color: var(--background-color);
+  --cc-secondary-color: var(--background-color);
+  --cc-btn-secondary-hover-bg: var(--black);
+  --cc-btn-primary-hover-border-color: var(--background-color);
+  /** Also make toggles the same color as the button **/
+  --cc-toggle-on-bg: var(--cc-btn-primary-bg);
+
+  /** Make the buttons a bit rounder **/
+  --cc-btn-border-radius: 20px;
+  --cc-bg: var(--black);
+}

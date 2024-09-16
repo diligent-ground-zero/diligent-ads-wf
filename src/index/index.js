@@ -1,6 +1,5 @@
 import PureCounter from '@srexi/purecounterjs'
 import gsap from 'gsap'
-// import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import Swiper from 'swiper'
 import {
@@ -10,9 +9,9 @@ import {
   EffectCards,
   EffectFade,
 } from 'swiper/modules'
+import CookieConsent from 'vanilla-cookieconsent/dist/cookieconsent.umd.js'
 
 import { horizontalLoop } from '../utils/scroller'
-
 import '../styles/style.css'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -503,5 +502,71 @@ export const linkedinAdsConversion = () => {
         console.warn('LinkedIn Insight tag is not available')
       }
     })
+  })
+}
+
+export const initCookieModal = () => {
+  document.documentElement.classList.add('cc--darkmode')
+  CookieConsent.run({
+    categories: {
+      necessary: {
+        enabled: true,
+        readOnly: true,
+      },
+      analytics: {},
+    },
+    guiOptions: {
+      consentModal: {
+        layout: 'bar inline',
+        position: 'bottom',
+      },
+    },
+    language: {
+      default: 'en',
+      translations: {
+        en: {
+          consentModal: {
+            title: 'We use cookies',
+            description:
+              'Our website uses cookies to ensure normal operation, alongside analytics, marketing & advertising services.',
+            acceptAllBtn: 'Accept all',
+            acceptNecessaryBtn: 'Reject all',
+            showPreferencesBtn: 'Manage Individual preferences',
+          },
+          preferencesModal: {
+            title: 'Manage cookie preferences',
+            acceptAllBtn: 'Accept all',
+            acceptNecessaryBtn: 'Reject all',
+            savePreferencesBtn: 'Accept current selection',
+            closeIconLabel: 'Close modal',
+            sections: [
+              {
+                title: 'Somebody said ... cookies?',
+                description: 'I want one!',
+              },
+              {
+                title: 'Strictly Necessary cookies',
+                description:
+                  'These cookies are essential for the proper functioning of the website and cannot be disabled.',
+
+                //this field will generate a toggle linked to the 'necessary' category
+                linkedCategory: 'necessary',
+              },
+              {
+                title: 'Performance and Analytics',
+                description:
+                  'These cookies collect information about how you use our website. All of the data is anonymized and cannot be used to identify you.',
+                linkedCategory: 'analytics',
+              },
+              {
+                title: 'More information',
+                description:
+                  'For any queries in relation to my policy on cookies and your choices, please <a href="#contact-page">contact us</a>',
+              },
+            ],
+          },
+        },
+      },
+    },
   })
 }

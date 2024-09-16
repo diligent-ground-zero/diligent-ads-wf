@@ -26,6 +26,7 @@
     "@srexi/purecounterjs": "^1.5.0",
     "gsap": "^3.9.1",
     "split-type": "^0.3.4",
-    "swiper": "^11.1.12"
+    "swiper": "^11.1.12",
+    "vanilla-cookieconsent": "3.0.1"
   }
 }

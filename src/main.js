@@ -6,6 +6,7 @@ import {
   initCounter,
   initNavigation,
   linkedinAdsConversion,
+  initCookieModal,
 } from './index'
 
 const getCurrentPath = () => window.location.pathname
@@ -15,6 +16,7 @@ const loadScripts = () => {
 
   initNavigation()
   linkedinAdsConversion()
+  initCookieModal()
 
   if (currentPath === '/') {
     initHomeSwipers()
