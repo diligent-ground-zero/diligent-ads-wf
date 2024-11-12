@@ -155,7 +155,7 @@ function closeOtherFaqs(clickedItem, allItems) {
 
 export const splitTextAnimation = () => {
   if (window.innerWidth > 992) {
-    createAnimation()
+    // createAnimation()
   } else {
     gsap.utils
       .toArray('.section_ads_animation_wrapper .ads_row')
@@ -201,126 +201,84 @@ export const splitTextAnimation = () => {
     }
   })
 
-  function createAnimation() {
-    // const introContent = document.querySelector('.section_intro')
-    const section_ads_first = document.querySelector('.section_ads_first')
+  // function createAnimation() {
+  //   const section_ads_first = document.querySelector('.section_ads_first')
 
-    const adsInSecond = gsap.utils.toArray('.section_ads .ads_image')
+  //   const adsInSecond = gsap.utils.toArray('.section_ads .ads_image')
 
-    // const cta_section = document.querySelector('.section_cta .cta_content')
-    // const firstFiveAds = adsInSecond.slice(-3)
-    // firstFiveAds.forEach((ad, index) => {
-    //   const clone = ad.cloneNode(true)
-    //   clone.style.position = 'absolute'
+  //   const adsExceptFourth = adsInSecond.filter((_, index) => index !== 3)
 
-    //   const x = index * 30
-    //   const y = 20
+  //   gsap.set(adsExceptFourth, { opacity: 0 })
+  //   const ele = createBackgroundDiv(
+  //     'right',
+  //     document.querySelector('.ads_image.hidden')
+  //   )
 
-    //   clone.style.left = `${x}%`
-    //   clone.style.top = `${y}%`
-    //   clone.style.transform = 'translate(0%, 75%) scale(0.8)'
-    //   clone.style.zIndex = '1'
+  //   gsap.set(gsap.utils.toArray([adsInSecond[3], ele]), {
+  //     position: 'absolute',
+  //     zIndex: (i) => 5 - i,
+  //     scale: (i) => {
+  //       return i > 0 ? 1.2 : 1.4
+  //     },
+  //     y: window.innerWidth > 920 ? -500 : -50,
+  //   })
 
-    //   cta_section.querySelector('.cta_images').appendChild(clone)
+  //   const tl = gsap.timeline({
+  //     scrollTrigger: {
+  //       trigger: section_ads_first,
+  //       start: 'top',
+  //       end: 'bottom',
+  //       scrub: 1,
+  //     },
+  //   })
 
-    //   gsap.to(clone, {
-    //     y: '+=20',
-    //     x: '+=10',
-    //     rotation: Math.random() * 10 - 5, // Rotate between -5 and 5 degrees
-    //     duration: 3 + Math.random() * 2, // Duration between 3 and 5 seconds
-    //     repeat: -1,
-    //     yoyo: true,
-    //     opacity: 0.8,
-    //     ease: 'sine.inOut',
-    //   })
-    // })
+  //   tl.to(adsInSecond[3], {
+  //     y: 0,
+  //     scale: 1,
+  //     ease: 'power1.out',
+  //     duration: 2,
+  //   })
 
-    const adsExceptFourth = adsInSecond.filter((_, index) => index !== 3)
+  //   tl.to(
+  //     adsExceptFourth,
+  //     {
+  //       y: 0,
+  //       opacity: 1,
+  //     },
+  //     '-=1'
+  //   )
 
-    gsap.set(adsExceptFourth, { opacity: 0 })
-    const ele = createBackgroundDiv(
-      'right',
-      document.querySelector('.ads_image.hidden')
-    )
+  //   tl.to(adsInSecond.splice(0, 6), {
+  //     x: '100px',
+  //     duration: 4,
+  //   })
 
-    gsap.set(gsap.utils.toArray([adsInSecond[3], ele]), {
-      position: 'absolute',
-      zIndex: (i) => 5 - i,
-      scale: (i) => {
-        return i > 0 ? 1.2 : 1.4
-      },
-      y: window.innerWidth > 920 ? -500 : -50,
-    })
-
-    const tl = gsap.timeline({
-      scrollTrigger: {
-        trigger: section_ads_first,
-        start: 'top',
-        end: 'bottom',
-        scrub: 1,
-      },
-    })
-
-    tl.to(adsInSecond[3], {
-      y: 0,
-      scale: 1,
-      ease: 'power1.out',
-      duration: 2,
-    })
-
-    tl.to(
-      adsExceptFourth,
-      {
-        y: 0,
-        opacity: 1,
-      },
-      '-=1'
-    )
-
-    tl.to(adsInSecond.splice(0, 6), {
-      x: '100px',
-      duration: 4,
-    })
-
-    tl.to(
-      adsInSecond.slice(-5),
-      {
-        x: '-100px',
-        duration: 4,
-      },
-      '<'
-    )
-
-    // gsap.set(panels, { opacity: 0, y: -20 })
-
-    // const tl2 = gsap.timeline({
-    //   scrollTrigger: {
-    //     trigger: '.section_intro',
-    //     start: 'top start',
-    //     end: 'center',
-    //     markers: true,
-    //     scrub: 1,
-    //   },
-    // })
-    // tl2.to(panels, { opacity: 1, y: 0 })
-  }
+  //   tl.to(
+  //     adsInSecond.slice(-5),
+  //     {
+  //       x: '-100px',
+  //       duration: 4,
+  //     },
+  //     '<'
+  //   )
+  // }
 }
 
-function createBackgroundDiv(side, parent) {
-  const div = document.createElement('div')
-  div.className = `black-bg ${side}`
-  div.style.cssText = `
-    position: absolute;
-    top: 0;
-    bottom: 0;
-    ${side}: -20%;
-    width: 20%;
-    background-color: black;
-    z-index: 1;
-  `
-  parent.appendChild(div)
-  return div
-}
+// function createBackgroundDiv(side, parent) {
+//   const div = document.createElement('div')
+//   div.className = `black-bg ${side}`
+//   div.style.cssText = `
+//     position: absolute;
+//     top: 0;
+//     bottom: 0;
+//     ${side}: -20%;
+//     width: 20%;
+//     background-color: black;
+//     z-index: 1;
+//   `
+//   parent.appendChild(div)
+//   return div
+// }
 
 export const initCounter = () => {
   new PureCounter({
@@ -329,7 +287,7 @@ export const initCounter = () => {
 
     // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
     start: 0, // Starting number [unit]
-    end: 740, // End number [unit]
+    end: 800, // End number [unit]
     duration: 2, // The time in seconds for the animation to complete [seconds]
     delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
     once: true, // Counting at once or recount when the element in view [boolean]
@@ -347,7 +305,7 @@ export const initCounter = () => {
 
     // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
     start: 0, // Starting number [unit]
-    end: 70, // End number [unit]
+    end: 80, // End number [unit]
     duration: 2, // The time in seconds for the animation to complete [seconds]
     delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
     once: true, // Counting at once or recount when the element in view [boolean]
@@ -569,4 +527,106 @@ export const initCookieModal = () => {
       },
     },
   })
+}
+
+export const initTabs = () => {
+  document.addEventListener('DOMContentLoaded', function () {
+    const tabs = document.querySelectorAll('.how_it_works_tabs_item')
+    const contents = document.querySelectorAll('.how_it_works_tabs_content_tab')
+    let animating = false // Flag to track if an animation is in progress
+
+    // Initially hide all content tabs and set opacity to 0
+    gsap.set(contents, { display: 'none', opacity: 0 })
+    if (contents.length > 0) {
+      gsap.set(contents[0], { display: 'flex', opacity: 1 }) // Show the first tab content
+      tabs[0].classList.add('active') // Set the first tab as active
+    }
+
+    tabs.forEach((tab, index) => {
+      tab.addEventListener('click', function () {
+        if (animating || this.classList.contains('active')) return // Prevent new animation if one is already in progress or if the tab is already active
+        animating = true // Set the flag to true as animation starts
+
+        // Remove active class from all tabs
+        tabs.forEach((innerTab) => {
+          innerTab.classList.remove('active')
+        })
+
+        // Animate all content tabs to hide them
+        contents.forEach((content, idx) => {
+          if (idx !== index) {
+            gsap.to(content, {
+              opacity: 0,
+              onComplete: () => {
+                gsap.set(content, { display: 'none' })
+                animating = false // Reset the flag when animation completes
+              },
+            })
+          } else {
+            // Immediately hide the current content when another tab is clicked
+            gsap.set(content, { display: 'none', opacity: 0 })
+          }
+        })
+
+        // Add active class to the clicked tab
+        this.classList.add('active')
+        // Display and animate the corresponding content tab
+        gsap.set(contents[index], { display: 'flex' })
+        gsap.to(contents[index], {
+          opacity: 1,
+          onComplete: () => {
+            animating = false // Reset the flag when animation completes
+          },
+        })
+      })
+    })
+  })
+}
+
+export const initWhatYouGetAnimations = () => {
+  let mm = gsap.matchMedia()
+  mm.add('(min-width: 993px)', () => {
+    const images = gsap.utils.toArray(
+      '.what_you_get_image_container .what_you_get_image_container_image'
+    )
+
+    ScrollTrigger.create({
+      trigger: '.what_you_get_image_container',
+      start: 'top center',
+      end: 'bottom center',
+      once: true, // Ensures the animation only runs once per page load
+      onEnter: () => {
+        gsap.fromTo(
+          images,
+          {
+            opacity: 0,
+          },
+          {
+            duration: 2,
+            opacity: 1,
+            ease: 'back.out(1.7)',
+            scale: () => 0.95 + Math.random() * 0.1,
+            rotation: () =>
+              Math.random() * 7.5 * (Math.random() < 0.5 ? -1 : 1),
+            stagger: 1,
+          }
+        )
+      },
+    })
+
+    return () => {
+      ScrollTrigger.getAll().forEach((trigger) => trigger.kill())
+    }
+  })
+}
+
+export const figmaIframeAdjust = () => {
+  const iframe = document.querySelector('.figma-iframe')
+  if (iframe) {
+    const parentContainer = iframe.parentElement
+    const width = parentContainer.offsetWidth
+    const height = parentContainer.offsetHeight
+    iframe.style.width = `${width}px`
+    iframe.style.height = `${height}px`
+  }
 }

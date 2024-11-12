@@ -7,6 +7,9 @@ import {
   initNavigation,
   linkedinAdsConversion,
   initCookieModal,
+  initTabs,
+  initWhatYouGetAnimations,
+  figmaIframeAdjust,
 } from './index'
 
 const getCurrentPath = () => window.location.pathname
@@ -18,12 +21,15 @@ const loadScripts = () => {
   linkedinAdsConversion()
   initCookieModal()
 
-  if (currentPath === '/') {
+  if (currentPath === '/' || currentPath === '/home-new') {
+    initTabs()
     initHomeSwipers()
     splitTextAnimation()
     initCounter()
     langaugeToggle()
     initFaqs()
+    initWhatYouGetAnimations()
+    figmaIframeAdjust()
   }
 
   if (currentPath.includes('/faq')) {

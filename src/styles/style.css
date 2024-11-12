@@ -1,10 +1,13 @@
-body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; -o-font-smoothing: antialiased; }
+body {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -o-font-smoothing: antialiased;
+}
 
 #loop-swiper-1 .swiper-wrapper,
 #loop-swiper-2 .swiper-wrapper {
   transition-timing-function: linear !important;
 }
-
 
 #faq .faq_accordion .faq_answer {
   max-height: 0;
@@ -14,12 +17,11 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
 }
 
 #faq .faq_accordion.open .faq_answer {
-  max-height: 500px; /* Adjust this value based on your content */
-  transition: max-height 0.6s ease-out,  opacity 0s ease-out;
-  opacity:1;
+  max-height: 500px;
+  transition: max-height 0.6s ease-out, opacity 0s ease-out;
+  opacity: 1;
 }
 
-/* Optional: Add transition to the question for a smoother effect */
 #faq .faq_accordion .faq_question {
   transition: color 0.6s ease-in-out;
 }
@@ -52,31 +54,65 @@ body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; 
   flex-direction: column;
   align-items: center;
   background: var(--black);
-  padding:40px 25px;
+  padding: 40px 25px;
   border-radius: 20px;
   width: calc(100% - 2rem);
 }
 
-.centered-menu .nav_link{
+.centered-menu .nav_link {
   color: var(--white);
 }
 
 .centered-menu .nav_link.w--current {
   box-shadow: unset;
-  background-color: unset;;
+  background-color: unset;
+  ;
 }
+
 .centered-menu .nav_link {
   font-size: 1rem;
 }
+
 .centered-menu .cta_button_component {
-  margin-left:0;
-  font-size:1.6rem;
-  margin-right:0;
-  margin-top:25px;
+  margin-left: 0;
+  font-size: 1.6rem;
+  margin-right: 0;
+  margin-top: 25px;
   padding: 1.5rem 1.5rem;
   text-align: center;
   justify-content: center;
 }
+
+section.section_ads .ads_row:nth-child(even) {
+  margin-right: 250px;
+}
+
+section.section_ads .ads_row:nth-child(odd) {
+  margin-left: 250px;
+}
+
+section.section_how_it_works .how_it_works_tabs_item {
+  position: relative;
+  cursor: pointer;
+}
+
+section.section_how_it_works .how_it_works_tabs_item.active {
+  cursor: not-allowed;
+}
+
+section.section_how_it_works .how_it_works_tabs_item.active::after {
+  content: "";
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 40px solid transparent;
+  border-right: 40px solid transparent;
+  border-bottom: 40px solid var(--black);
+  transform: rotate(90deg);
+  position: absolute;
+  right: -60px;
+}
+
 
 #cc-main {
   --cc-font-family: var(--main-font);
