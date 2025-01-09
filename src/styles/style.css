@@ -113,6 +113,10 @@ section.section_how_it_works .how_it_works_tabs_item.active::after {
   right: -60px;
 }
 
+#decrease_nr_of_ads:disabled {
+  opacity: 0.2;
+  cursor: not-allowed;
+}
 
 #cc-main {
   --cc-font-family: var(--main-font);

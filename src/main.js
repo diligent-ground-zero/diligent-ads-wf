@@ -2,7 +2,6 @@ import {
   initHomeSwipers,
   initFaqs,
   splitTextAnimation,
-  langaugeToggle,
   initCounter,
   initNavigation,
   linkedinAdsConversion,
@@ -10,6 +9,7 @@ import {
   initTabs,
   initWhatYouGetAnimations,
   figmaIframeAdjust,
+  initPriceCalculator,
 } from './index'
 
 const getCurrentPath = () => window.location.pathname
@@ -22,11 +22,11 @@ const loadScripts = () => {
   initCookieModal()
 
   if (currentPath === '/' || currentPath === '/home-new') {
+    initPriceCalculator()
     initTabs()
     initHomeSwipers()
     splitTextAnimation()
     initCounter()
-    langaugeToggle()
     initFaqs()
     initWhatYouGetAnimations()
     figmaIframeAdjust()

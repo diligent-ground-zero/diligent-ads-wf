@@ -21,6 +21,53 @@ import 'swiper/css/effect-fade'
 
 gsap.registerPlugin(ScrollTrigger)
 
+export const initPriceCalculator = () => {
+  const PRICE_PER_AD = 160
+  const priceCalculator = document.querySelector('#calculating_pricing_card')
+  const secondaryLabel = priceCalculator.querySelector(
+    '#basic-package-price-value-label-secondary'
+  )
+  const labelValue = priceCalculator.querySelector(
+    '#basic-package-price-value-label'
+  )
+  const numberOfAdsInput = priceCalculator.querySelector('#number_of_ads')
+  const increaseNrOfAdsInput = priceCalculator.querySelector(
+    '#increase_nr_of_ads'
+  )
+  const decreaseNrOfAdsInput = priceCalculator.querySelector(
+    '#decrease_nr_of_ads'
+  )
+
+  increaseNrOfAdsInput.addEventListener('click', () => {
+    numberOfAdsInput.value = parseInt(numberOfAdsInput.value) + 1
+    calculatePrice()
+  })
+
+  decreaseNrOfAdsInput.addEventListener('click', () => {
+    if (numberOfAdsInput.value > 24) {
+      numberOfAdsInput.value = parseInt(numberOfAdsInput.value) - 1
+    }
+    calculatePrice()
+  })
+
+  const calculatePrice = () => {
+    const numberOfAds = parseInt(numberOfAdsInput.value)
+    const totalPrice = numberOfAds * PRICE_PER_AD
+    labelValue.textContent = `$${totalPrice.toFixed(0)}/`
+    secondaryLabel.textContent = parseInt(numberOfAdsInput.value)
+    numberOfAdsInput.dispatchEvent(new Event('change'))
+  }
+
+  const updateDecreaseButtonState = () => {
+    console.log(numberOfAdsInput.value)
+    decreaseNrOfAdsInput.disabled = parseInt(numberOfAdsInput.value) === 24
+  }
+
+  calculatePrice()
+  updateDecreaseButtonState()
+  numberOfAdsInput.addEventListener('change', updateDecreaseButtonState)
+}
+
 export const initHomeSwipers = () => {
   const swiperLoopOptions = {
     spaceBetween: 20,
@@ -287,7 +334,7 @@ export const initCounter = () => {
 
     // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
     start: 0, // Starting number [unit]
-    end: 800, // End number [unit]
+    end: 1000, // End number [unit]
     duration: 2, // The time in seconds for the animation to complete [seconds]
     delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
     once: true, // Counting at once or recount when the element in view [boolean]
@@ -305,7 +352,7 @@ export const initCounter = () => {
 
     // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
     start: 0, // Starting number [unit]
-    end: 80, // End number [unit]
+    end: 100, // End number [unit]
     duration: 2, // The time in seconds for the animation to complete [seconds]
     delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
     once: true, // Counting at once or recount when the element in view [boolean]
