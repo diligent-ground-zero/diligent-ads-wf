@@ -3,13 +3,15 @@ import {
   initFaqs,
   splitTextAnimation,
   initCounter,
-  initNavigation,
+  // initNavigation,
   linkedinAdsConversion,
   initCookieModal,
   initTabs,
   initWhatYouGetAnimations,
   figmaIframeAdjust,
   initPriceCalculator,
+  initStepperReferrals,
+  initCopyToClipboard,
 } from './index'
 
 const getCurrentPath = () => window.location.pathname
@@ -17,7 +19,7 @@ const getCurrentPath = () => window.location.pathname
 const loadScripts = () => {
   const currentPath = getCurrentPath()
 
-  initNavigation()
+  // initNavigation()
   linkedinAdsConversion()
   initCookieModal()
 
@@ -32,8 +34,10 @@ const loadScripts = () => {
     figmaIframeAdjust()
   }
 
-  if (currentPath.includes('/faq')) {
+  if (currentPath.includes('/referrals')) {
     initFaqs()
+    initStepperReferrals()
+    initCopyToClipboard()
   }
 }
 

@@ -136,3 +136,113 @@ section.section_how_it_works .how_it_works_tabs_item.active::after {
   --cc-btn-border-radius: 20px;
   --cc-bg: var(--black);
 }
+
+.referral_calc_wrap {
+  position: relative;
+}
+
+/* datalist {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 25px;
+  color: var(--white);
+  font-size: 14px;
+  width: calc(100% - 20px);
+  margin-left: 10px;
+  text-transform: uppercase;
+}
+
+datalist option {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 2px;
+}
+
+datalist option::before {
+  content: '';
+  display: block;
+  width: 2px;
+  height: 8px;
+  background: #e0eaf1;
+  position: absolute;
+  top: -12px;
+  left: 0;
+}
+
+datalist option::after {
+  content: attr(value);
+  position: absolute;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 20px;
+  text-align: center;
+} */
+
+input[type="range"] {
+  --range: calc(var(--max) - var(--min));
+  --ratio: calc((var(--val) - var(--min))/var(--range));
+  --sx: calc(0.5*2em + var(--ratio)*(100% - 2.5em));
+  -webkit-appearance: none;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  width: 100%;
+  margin: 0;
+  height: 2em;
+}
+
+input[type="range"]~output {
+  display: block;
+  position: absolute;
+  max-width: 16ch;
+  text-align: center;
+  border-radius: 10px;
+  background: white;
+  color: var(--black);
+  font-family: var(--main-font);
+  z-index: 1;
+  font-size: 1rem;
+  line-height: 1.25;
+  padding: 0.5rem 1rem;
+
+  left: 50%;
+  top: -6.5rem;
+  transform: translateX(-50%);
+
+  @media (min-width: 768px) {
+    left: 0.75em;
+    top: -6rem;
+    transform: translate(calc((var(--val) - var(--min)) /(var(--max) - var(--min))* 50rem - 50%));
+  }
+}
+
+input[type="range"]::-webkit-list-button {
+  display: none;
+}
+
+[type=range]::-webkit-slider-runnable-track {
+  background: linear-gradient(#71BFEB, #71BFEB) 0/var(--sx) 100% no-repeat #d1d1d1;
+  border-radius: 25px;
+  height: 1rem;
+  width: calc(100% - 2em);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.9)
+}
+
+input[type="range"]::-moz-range-track {
+  background: #e0eaf1;
+  height: 0.5rem;
+  border-radius: 25px;
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: #EBB671;
+  margin-top: -0.5rem;
+  height: 1.75rem;
+  width: 1.75rem;
+  border-radius: 50%;
+}

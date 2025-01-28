@@ -327,6 +327,127 @@ export const splitTextAnimation = () => {
 //   return div
 // }
 
+export const initStepperReferrals = () => {
+  const referralCalcWrap = document.querySelector('div.referral_calc_wrap')
+  const inputEl = referralCalcWrap.querySelector('input[id=referral_calc]')
+  const descriptorTextNumber = document.querySelector('.descriptor_text_number')
+  const descriptorTextValue = document.querySelector('.descriptor_text_value')
+  const outputElement = referralCalcWrap.querySelector(
+    'output[for=referral_calc]'
+  )
+  //const valueSet = [1, 5, 10, 15, 20, 25]
+  inputEl.value = inputEl.style.getPropertyValue('--val')
+  descriptorTextNumber.textContent = `${inputEl.value} companies `
+  referralCalcWrap.style.getPropertyValue('--val', 3)
+  outputElement.innerHTML = `3 Referrals: <br>Earn <b>$${(
+    3 *
+    (0.15 * 2900)
+  ).toLocaleString()} </b>per month`
+  descriptorTextValue.textContent = `$${(3 * (0.15 * 2900)).toLocaleString()}`
+  inputEl.addEventListener(
+    'input',
+    function () {
+      const elValue = parseFloat(this.value) || 0
+      inputEl.style.setProperty('--val', elValue)
+      referralCalcWrap.style.setProperty('--val', elValue)
+      inputEl.value = elValue
+      outputElement.innerHTML = `${elValue} ${
+        elValue === 1 ? 'Referral' : 'Referrals'
+      }: <br>Earn <b>$${(
+        elValue *
+        (0.15 * 2900)
+      ).toLocaleString()}</b> per month`
+
+      descriptorTextNumber.textContent = `${elValue} companies `
+      descriptorTextValue.textContent = `$${(
+        elValue *
+        (0.15 * 2900)
+      ).toLocaleString()}`
+    },
+    false
+  )
+}
+
+export const initCopyToClipboard = () => {
+  const copyWrapper = document.querySelector('.copy_content')
+  const copyButton = copyWrapper.querySelector('.copy_button')
+
+  // Create toast element with improved styling
+  const toast = document.createElement('div')
+  toast.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    padding: 12px 24px;
+    border-radius: 8px;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+    z-index: 1000;
+    pointer-events: none;
+  `
+  document.body.appendChild(toast)
+
+  const showToast = (message, isError = false) => {
+    toast.style.backgroundColor = isError ? '#dc3545' : '#28a745'
+    toast.textContent = message
+    toast.style.opacity = '1'
+
+    setTimeout(() => {
+      toast.style.opacity = '0'
+    }, 2000)
+  }
+
+  const copyText = async (text) => {
+    // Try modern Clipboard API first
+    if (navigator.clipboard && window.isSecureContext) {
+      try {
+        await navigator.clipboard.writeText(text)
+        return true
+      } catch (err) {
+        console.error('Clipboard API failed:', err)
+      }
+    }
+
+    // Fallback to older execCommand method
+    try {
+      const textArea = document.createElement('textarea')
+      textArea.value = text
+      textArea.style.cssText = 'position:fixed;top:0;left:0;opacity:0;'
+      document.body.appendChild(textArea)
+      textArea.focus()
+      textArea.select()
+      const success = document.execCommand('copy')
+      textArea.remove()
+      return success
+    } catch (err) {
+      console.error('execCommand failed:', err)
+      return false
+    }
+  }
+
+  copyButton.addEventListener('click', async () => {
+    const textToCopy = copyWrapper.querySelector('p').textContent.trim()
+
+    try {
+      const success = await copyText(textToCopy)
+      if (success) {
+        showToast('Copied to clipboard!')
+        // Optional: Add visual feedback to the button
+        copyButton.classList.add('copied')
+        setTimeout(() => copyButton.classList.remove('copied'), 2000)
+      } else {
+        throw new Error('Copy operation failed')
+      }
+    } catch (err) {
+      showToast('Failed to copy text', true)
+      console.error('Copy failed:', err)
+    }
+  })
+}
+
 export const initCounter = () => {
   new PureCounter({
     // Setting that can't' be overriden on pre-element
