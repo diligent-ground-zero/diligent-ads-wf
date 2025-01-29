@@ -337,7 +337,7 @@ export const initStepperReferrals = () => {
   )
   //const valueSet = [1, 5, 10, 15, 20, 25]
   inputEl.value = inputEl.style.getPropertyValue('--val')
-  descriptorTextNumber.textContent = `${inputEl.value} companies `
+  descriptorTextNumber.textContent = `${inputEl.value} companies' `
   referralCalcWrap.style.getPropertyValue('--val', 3)
   outputElement.innerHTML = `3 Referrals: <br>Earn <b>$${(
     3 *
@@ -358,7 +358,9 @@ export const initStepperReferrals = () => {
         (0.15 * 2900)
       ).toLocaleString()}</b> per month`
 
-      descriptorTextNumber.textContent = `${elValue} companies `
+      descriptorTextNumber.textContent = `${elValue} ${
+        elValue === 1 ? "company's" : "companies'"
+      } `
       descriptorTextValue.textContent = `$${(
         elValue *
         (0.15 * 2900)
