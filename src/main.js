@@ -3,7 +3,7 @@ import {
   initFaqs,
   splitTextAnimation,
   initCounter,
-  // initNavigation,
+  initNavigation,
   linkedinAdsConversion,
   initCookieModal,
   initTabs,
@@ -19,7 +19,7 @@ const getCurrentPath = () => window.location.pathname
 const loadScripts = () => {
   const currentPath = getCurrentPath()
 
-  // initNavigation()
+  initNavigation()
   linkedinAdsConversion()
   initCookieModal()
 
