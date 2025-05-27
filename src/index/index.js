@@ -22,7 +22,7 @@ import 'swiper/css/effect-fade'
 gsap.registerPlugin(ScrollTrigger)
 
 export const initPriceCalculator = () => {
-  const PRICE_PER_AD = 160
+  const PRICE_PER_AD = 200
   const priceCalculator = document.querySelector('#calculating_pricing_card')
   const secondaryLabel = priceCalculator.querySelector(
     '#basic-package-price-value-label-secondary'
