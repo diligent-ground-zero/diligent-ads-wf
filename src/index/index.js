@@ -11,7 +11,6 @@ import {
 } from 'swiper/modules'
 import CookieConsent from 'vanilla-cookieconsent/dist/cookieconsent.umd.js'
 
-import { horizontalLoop } from '../utils/scroller'
 import '../styles/style.css'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -20,53 +19,6 @@ import 'swiper/css/effect-cards'
 import 'swiper/css/effect-fade'
 
 gsap.registerPlugin(ScrollTrigger)
-
-export const initPriceCalculator = () => {
-  const PRICE_PER_AD = 200
-  const priceCalculator = document.querySelector('#calculating_pricing_card')
-  const secondaryLabel = priceCalculator.querySelector(
-    '#basic-package-price-value-label-secondary'
-  )
-  const labelValue = priceCalculator.querySelector(
-    '#basic-package-price-value-label'
-  )
-  const numberOfAdsInput = priceCalculator.querySelector('#number_of_ads')
-  const increaseNrOfAdsInput = priceCalculator.querySelector(
-    '#increase_nr_of_ads'
-  )
-  const decreaseNrOfAdsInput = priceCalculator.querySelector(
-    '#decrease_nr_of_ads'
-  )
-
-  increaseNrOfAdsInput.addEventListener('click', () => {
-    numberOfAdsInput.value = parseInt(numberOfAdsInput.value) + 1
-    calculatePrice()
-  })
-
-  decreaseNrOfAdsInput.addEventListener('click', () => {
-    if (numberOfAdsInput.value > 24) {
-      numberOfAdsInput.value = parseInt(numberOfAdsInput.value) - 1
-    }
-    calculatePrice()
-  })
-
-  const calculatePrice = () => {
-    const numberOfAds = parseInt(numberOfAdsInput.value)
-    const totalPrice = numberOfAds * PRICE_PER_AD
-    labelValue.textContent = `$${totalPrice.toFixed(0)}/`
-    secondaryLabel.textContent = parseInt(numberOfAdsInput.value)
-    numberOfAdsInput.dispatchEvent(new Event('change'))
-  }
-
-  const updateDecreaseButtonState = () => {
-    console.log(numberOfAdsInput.value)
-    decreaseNrOfAdsInput.disabled = parseInt(numberOfAdsInput.value) === 24
-  }
-
-  calculatePrice()
-  updateDecreaseButtonState()
-  numberOfAdsInput.addEventListener('change', updateDecreaseButtonState)
-}
 
 export const initHomeSwipers = () => {
   const swiperLoopOptions = {
@@ -204,16 +156,16 @@ export const splitTextAnimation = () => {
   if (window.innerWidth > 992) {
     // createAnimation()
   } else {
-    gsap.utils
-      .toArray('.section_ads_animation_wrapper .ads_row')
-      .forEach((line, index) => {
-        const speed = 0.08 // (in pixels per second)
-        horizontalLoop(line, {
-          speed: speed,
-          reversed: index === 0,
-          repeat: -1,
-        })
-      })
+    // gsap.utils
+    //   .toArray('.section_ads_animation_wrapper .ads_row')
+    //   .forEach((line, index) => {
+    //     const speed = 0.08 // (in pixels per second)
+    //     horizontalLoop(line, {
+    //       speed: speed,
+    //       reversed: index === 0,
+    //       repeat: -1,
+    //     })
+    //   })
   }
 
   const panels = gsap.utils.toArray('.intro_content')

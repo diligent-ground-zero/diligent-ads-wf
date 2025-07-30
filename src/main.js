@@ -9,7 +9,6 @@ import {
   initTabs,
   initWhatYouGetAnimations,
   figmaIframeAdjust,
-  initPriceCalculator,
   initStepperReferrals,
   initCopyToClipboard,
 } from './index'
@@ -24,7 +23,6 @@ const loadScripts = () => {
   initCookieModal()
 
   if (currentPath === '/' || currentPath === '/home-new') {
-    initPriceCalculator()
     initTabs()
     initHomeSwipers()
     splitTextAnimation()
