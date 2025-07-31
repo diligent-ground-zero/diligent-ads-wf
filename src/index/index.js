@@ -3,8 +3,8 @@ import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
 import Swiper from 'swiper'
 import {
-  Navigation,
   Autoplay,
+  Navigation,
   Controller,
   EffectCards,
   EffectFade,
@@ -47,10 +47,9 @@ export const initHomeSwipers = () => {
   const photoSwiper = new Swiper('.swiper.is-photos', {
     effect: 'cards',
     grabCursor: false,
-    loop: true,
+    slidesPerView: 1,
     allowTouchMove: false,
     keyboard: false,
-    initialSlide: 1,
     modules: [Navigation, Controller, EffectCards],
     navigation: {
       nextEl: '.arrow.is-right',
@@ -64,11 +63,10 @@ export const initHomeSwipers = () => {
   })
 
   const contentSwiper = new Swiper('.swiper.is-content', {
-    loop: true,
     followFinger: false,
     allowTouchMove: false,
+    slidesPerView: 1,
     effect: 'fade',
-    initialSlide: 1,
     fadeEffect: {
       crossFade: true,
     },
@@ -303,16 +301,14 @@ export const initStepperReferrals = () => {
       inputEl.style.setProperty('--val', elValue)
       referralCalcWrap.style.setProperty('--val', elValue)
       inputEl.value = elValue
-      outputElement.innerHTML = `${elValue} ${
-        elValue === 1 ? 'Referral' : 'Referrals'
-      }: <br>Earn <b>$${(
-        elValue *
-        (0.15 * 2900)
-      ).toLocaleString()}</b> per month`
+      outputElement.innerHTML = `${elValue} ${elValue === 1 ? 'Referral' : 'Referrals'
+        }: <br>Earn <b>$${(
+          elValue *
+          (0.15 * 2900)
+        ).toLocaleString()}</b> per month`
 
-      descriptorTextNumber.textContent = `${elValue} ${
-        elValue === 1 ? "company's" : "companies'"
-      } `
+      descriptorTextNumber.textContent = `${elValue} ${elValue === 1 ? "company's" : "companies'"
+        } `
       descriptorTextValue.textContent = `$${(
         elValue *
         (0.15 * 2900)
@@ -409,7 +405,7 @@ export const initCounter = () => {
 
     // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
     start: 0, // Starting number [unit]
-    end: 1000, // End number [unit]
+    end: 1300, // End number [unit]
     duration: 2, // The time in seconds for the animation to complete [seconds]
     delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
     once: true, // Counting at once or recount when the element in view [boolean]

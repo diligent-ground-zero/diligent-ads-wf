@@ -11,16 +11,29 @@
     "jest": true,
     "browser": true
   },
-  "extends": ["eslint:recommended", "plugin:prettier/recommended"],
-  "plugins": ["import", "sort-imports-es6-autofix"],
+  "extends": [
+    "eslint:recommended"
+  ],
+  "plugins": [
+    "import",
+    "sort-imports-es6-autofix"
+  ],
   "rules": {
     "@typescript-eslint/explicit-module-boundary-types": "off",
     "import/order": [
       "error",
       {
         "groups": [
-          ["external", "builtin"],
-          ["index", "internal", "sibling", "parent"]
+          [
+            "external",
+            "builtin"
+          ],
+          [
+            "index",
+            "internal",
+            "sibling",
+            "parent"
+          ]
         ],
         "newlines-between": "always",
         "alphabetize": {
