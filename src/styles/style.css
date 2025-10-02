@@ -9,6 +9,26 @@ body {
   transition-timing-function: linear !important;
 }
 
+.arrow.is-left.swiper-button-prev,
+.arrow.is-right.swiper-button-next {
+  position: relative;
+
+  width: auto;
+  height: auto;
+  background: none;
+  top: unset;
+  transform: unset;
+  margin: 0;
+  padding: 0;
+  left: unset;
+  right: unset;
+}
+
+.arrow.is-left.swiper-button-prev:after,
+.arrow.is-right.swiper-button-next:after {
+  display: none;
+}
+
 #faq .faq_accordion .faq_answer {
   max-height: 0;
   overflow: hidden;

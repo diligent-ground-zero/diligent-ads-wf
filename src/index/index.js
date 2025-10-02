@@ -21,9 +21,10 @@ import 'swiper/css/effect-fade'
 gsap.registerPlugin(ScrollTrigger)
 
 export const initHomeSwipers = () => {
+  console.log('initHomeSwipers called');
   const swiperLoopOptions = {
     spaceBetween: 20,
-    loop: true,
+    loop: false,
     allowTouchMove: false,
     slidesPerView: '4',
     centeredSlides: true,
@@ -44,24 +45,6 @@ export const initHomeSwipers = () => {
 
   new Swiper('#loop-swiper-2', swiperLoopOptions)
 
-  const photoSwiper = new Swiper('.swiper.is-photos', {
-    effect: 'cards',
-    grabCursor: false,
-    slidesPerView: 1,
-    allowTouchMove: false,
-    keyboard: false,
-    modules: [Navigation, Controller, EffectCards],
-    navigation: {
-      nextEl: '.arrow.is-right',
-      prevEl: '.arrow.is-left',
-    },
-    cardsEffect: {
-      rotate: false,
-      slideShadows: false,
-    },
-    speed: 700,
-  })
-
   const contentSwiper = new Swiper('.swiper.is-content', {
     followFinger: false,
     allowTouchMove: false,
@@ -70,15 +53,33 @@ export const initHomeSwipers = () => {
     fadeEffect: {
       crossFade: true,
     },
-    navigation: {
-      nextEl: '.arrow.is-right',
-      prevEl: '.arrow.is-left',
-    },
-    modules: [Controller, EffectFade],
+    modules: [Controller, EffectFade, Navigation],
+    speed: 700,
+    watchSlidesProgress: true,
   })
 
-  photoSwiper.controller.control = contentSwiper
-  contentSwiper.controller.control = photoSwiper
+  const photoswiper = new Swiper('.swiper.is-photos', {
+    effect: 'cards',
+    grabCursor: false,
+    slidesPerView: 1,
+    loop: false,
+    allowTouchMove: false,
+    keyboard: false,
+    modules: [Navigation, Controller, EffectCards],
+    navigation: {
+      nextEl: '.arrow.is-right.swiper-button-next',
+      prevEl: '.arrow.is-left.swiper-button-prev',
+    },
+    cardsEffect: {
+      rotate: true,
+      slideShadows: true,
+    },
+    speed: 500,
+    watchSlidesProgress: true,
+  })
+
+  photoswiper.controller.control = contentSwiper
+  contentSwiper.controller.control = photoswiper
 }
 
 export function initFaqs() {
@@ -405,7 +406,7 @@ export const initCounter = () => {
 
     // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
     start: 0, // Starting number [unit]
-    end: 1300, // End number [unit]
+    end: 1500, // End number [unit]
     duration: 2, // The time in seconds for the animation to complete [seconds]
     delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
     once: true, // Counting at once or recount when the element in view [boolean]
@@ -423,7 +424,7 @@ export const initCounter = () => {
 
     // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
     start: 0, // Starting number [unit]
-    end: 100, // End number [unit]
+    end: 250, // End number [unit]
     duration: 2, // The time in seconds for the animation to complete [seconds]
     delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
     once: true, // Counting at once or recount when the element in view [boolean]
