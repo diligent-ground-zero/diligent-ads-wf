@@ -1,0 +1,8 @@
+{
+  "version": 3,
+  "sources": ["../src/index.ts"],
+  "sourceRoot": "dist",
+  "sourcesContent": ["export interface Env {\n  ADS_BUCKET: R2Bucket;\n}\n\nexport default {\n  async fetch(_request: Request, _env: Env): Promise<Response> {\n    return new Response(\"OK\");\n  },\n};\n"],
+  "mappings": ";AAIA,IAAO,cAAQ;AAAA,EACb,MAAM,MAAM,UAAmB,MAA8B;AAC3D,WAAO,IAAI,SAAS,IAAI;AAAA,EAC1B;AACF;",
+  "names": []
+}

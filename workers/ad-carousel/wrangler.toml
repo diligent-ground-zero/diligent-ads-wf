@@ -1,0 +1,10 @@
+name = "diligent-studios-ad-carousel"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+
+[[r2_buckets]]
+binding = "ADS_BUCKET"
+bucket_name = "diligent-studios-ads"
+
+[dev]
+port = 8787
