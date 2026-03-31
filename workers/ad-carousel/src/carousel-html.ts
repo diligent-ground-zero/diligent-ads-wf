@@ -39,7 +39,7 @@ export function buildCarouselHtml(workerOrigin: string): string {
     .ad-card {
       flex-shrink: 0;
       width: 300px;
-      height: 188px;
+      height: 300px;
       border-radius: 14px;
       overflow: hidden;
       position: relative;
