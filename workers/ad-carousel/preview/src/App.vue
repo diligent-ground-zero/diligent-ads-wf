@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const WORKER_URL = import.meta.env.VITE_WORKER_URL ?? "https://diligent-studios-ad-carousel.niko-a29.workers.dev";
+const WORKER_URL = import.meta.env.VITE_WORKER_URL ?? "https://api.diligentstudios.com";
 </script>
 
 <template>
