@@ -13,3 +13,18 @@ describe("Image proxy", () => {
     expect(res.status).toBe(404);
   });
 });
+
+describe("Shuffle API", () => {
+  it("returns JSON with ads array", async () => {
+    const res = await SELF.fetch("http://example.com/api/shuffle");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("Content-Type")).toContain("application/json");
+    const data = await res.json<{ ads: Array<{ key: string; url: string }> }>();
+    expect(Array.isArray(data.ads)).toBe(true);
+  });
+
+  it("responds to /api/ads as well", async () => {
+    const res = await SELF.fetch("http://example.com/api/ads");
+    expect(res.status).toBe(200);
+  });
+});

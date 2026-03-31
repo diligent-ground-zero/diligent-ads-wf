@@ -20,9 +20,41 @@ export default {
       return handleImage(path.slice("/images/".length), env);
     }
 
+    if (path === "/api/shuffle" || path === "/api/ads") {
+      return handleShuffle(request.url, env);
+    }
+
     return new Response("Not Found", { status: 404 });
   },
 };
+
+async function handleShuffle(requestUrl: string, env: Env): Promise<Response> {
+  const url = new URL(requestUrl);
+  const count = Math.min(parseInt(url.searchParams.get("count") ?? "12"), 50);
+
+  const list = await env.ADS_BUCKET.list({ prefix: "ads/" });
+  const keys = list.objects
+    .map((obj) => obj.key)
+    .filter((k) => k !== "ads/");
+
+  // Fisher-Yates shuffle
+  for (let i = keys.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [keys[i], keys[j]] = [keys[j], keys[i]];
+  }
+
+  const selected = keys.slice(0, Math.min(count, keys.length));
+  const origin = new URL(requestUrl).origin;
+
+  const ads = selected.map((key) => ({
+    key,
+    url: `${origin}/images/${key}`,
+  }));
+
+  return new Response(JSON.stringify({ ads }), {
+    headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
+  });
+}
 
 async function handleImage(key: string, env: Env): Promise<Response> {
   if (!key) {
