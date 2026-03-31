@@ -28,3 +28,23 @@ describe("Shuffle API", () => {
     expect(res.status).toBe(200);
   });
 });
+
+describe("Embed route", () => {
+  it("returns HTML with 200", async () => {
+    const res = await SELF.fetch("http://example.com/embed");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("Content-Type")).toContain("text/html");
+  });
+
+  it("root / also returns HTML", async () => {
+    const res = await SELF.fetch("http://example.com/");
+    expect(res.status).toBe(200);
+    expect(res.headers.get("Content-Type")).toContain("text/html");
+  });
+
+  it("OPTIONS returns CORS headers", async () => {
+    const res = await SELF.fetch("http://example.com/embed", { method: "OPTIONS" });
+    expect(res.status).toBe(200);
+    expect(res.headers.get("Access-Control-Allow-Origin")).toBe("*");
+  });
+});
