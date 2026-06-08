@@ -11,7 +11,6 @@ export function buildCarouselHtml(workerOrigin: string): string {
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      background: #080808;
       overflow: hidden;
       font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
       height: 100vh;
@@ -19,32 +18,43 @@ export function buildCarouselHtml(workerOrigin: string): string {
       flex-direction: column;
       align-items: center;
       justify-content: center;
+      gap: 0;
+    }
+
+    .carousels {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      width: 100%;
+      transform: rotate3d(1, 1, 1, 5deg);
     }
 
     .carousel-wrapper {
       width: 100%;
       position: relative;
-      overflow: hidden;
-      padding: 28px 0;
-      mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
-      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 8%, black 92%, transparent 100%);
+      /* clip horizontally without clipping shadows vertically */
+      overflow-x: clip;
+      overflow-y: visible;
+      padding: 6px 0;
+      mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
+      -webkit-mask-image: linear-gradient(to right, transparent 0%, black 6%, black 94%, transparent 100%);
     }
 
     .carousel-track {
       display: flex;
-      gap: 20px;
+      gap: 16px;
       will-change: transform;
     }
 
     .ad-card {
       flex-shrink: 0;
-      width: 300px;
-      height: 300px;
-      border-radius: 14px;
+      width: 325px;
+      height: 325px;
+      border-radius: 22px;
       overflow: hidden;
       position: relative;
       background: #181818;
-      box-shadow: 0 4px 24px rgba(0,0,0,0.5), 0 1px 2px rgba(0,0,0,0.8);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
 
     .ad-card img {
@@ -67,12 +77,12 @@ export function buildCarouselHtml(workerOrigin: string): string {
       position: absolute;
       inset: 0;
       border-radius: 14px;
-      border: 1px solid rgba(255,255,255,0.07);
+      border: 1px solid rgba(255,255,255,0.06);
       pointer-events: none;
     }
 
     .controls {
-      margin-top: 24px;
+      margin-top: 20px;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -104,32 +114,38 @@ export function buildCarouselHtml(workerOrigin: string): string {
       color: rgba(255,255,255,0.9);
     }
 
-    .shuffle-btn:active {
-      transform: scale(0.97);
-    }
+    .shuffle-btn:active { transform: scale(0.97); }
 
     .shuffle-btn.loading {
       pointer-events: none;
       opacity: 0.6;
     }
 
-    .shuffle-btn svg {
-      width: 13px;
-      height: 13px;
-    }
+    .shuffle-btn svg { width: 13px; height: 13px; }
 
     .shuffle-btn.loading svg {
       animation: spin 0.7s linear infinite;
     }
 
     @keyframes spin { to { transform: rotate(360deg); } }
+
+    @media (max-width: 768px) {
+      .carousel-track { gap: 8px; }
+      .ad-card { width: 163px; height: 163px; border-radius: 11px; }
+      .ad-card::after { border-radius: 11px; }
+    }
   </style>
 </head>
 <body>
-  <div class="carousel-wrapper">
-    <div class="carousel-track" id="track"></div>
+  <div class="carousels">
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="track1"></div>
+    </div>
+    <div class="carousel-wrapper">
+      <div class="carousel-track" id="track2"></div>
+    </div>
   </div>
-  <div class="controls">
+  <!-- <div class="controls">
     <button class="shuffle-btn" id="shuffleBtn" aria-label="Shuffle ads">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
         <polyline points="16 3 21 3 21 8"></polyline>
@@ -139,30 +155,30 @@ export function buildCarouselHtml(workerOrigin: string): string {
       </svg>
       Shuffle
     </button>
-  </div>
+  </div> -->
 
   <script>
     gsap.registerPlugin(CustomEase);
-
-    CustomEase.create("glide", "M0,0 C0.11,0 0.16,0.36 0.21,0.5 0.28,0.68 0.34,0.87 0.4,0.96 0.48,1.06 0.6,1.01 1,1");
     CustomEase.create("cardIn", "M0,0 C0.14,0 0.18,0.58 0.26,0.72 0.36,0.88 0.52,1.02 1,1");
 
     const WORKER_ORIGIN = "${workerOrigin}";
-    const CARD_WIDTH = 320;
-    const track = document.getElementById("track");
-    const shuffleBtn = document.getElementById("shuffleBtn");
-    let loopTween = null;
+    const CARD_WIDTH = window.innerWidth <= 768 ? 171 : 341; // mobile: 163+8, desktop: 325+16
+    const track1 = document.getElementById("track1");
+    const track2 = document.getElementById("track2");
+    // const shuffleBtn = document.getElementById("shuffleBtn");
+    let tween1 = null;
+    let tween2 = null;
 
     async function fetchAds() {
-      const res = await fetch(WORKER_ORIGIN + "/api/shuffle?count=12");
+      const res = await fetch(WORKER_ORIGIN + "/api/shuffle?count=24");
       const data = await res.json();
       return data.ads || [];
     }
 
-    function renderCards(ads, doubled = true) {
+    function renderTrack(track, ads) {
       track.innerHTML = "";
-      const items = doubled ? [...ads, ...ads] : ads;
-      items.forEach(ad => {
+      // Double for seamless loop
+      [...ads, ...ads].forEach(ad => {
         const card = document.createElement("div");
         card.className = "ad-card";
         const img = document.createElement("img");
@@ -174,67 +190,98 @@ export function buildCarouselHtml(workerOrigin: string): string {
       });
     }
 
-    function startLoop(adCount) {
-      if (loopTween) loopTween.kill();
-      const totalWidth = CARD_WIDTH * adCount;
-      gsap.set(track, { x: 0 });
-      loopTween = gsap.to(track, {
-        x: -totalWidth,
-        duration: adCount * 3.5,
+    function startLoops(count1, count2) {
+      if (tween1) tween1.kill();
+      if (tween2) tween2.kill();
+
+      const w1 = CARD_WIDTH * count1;
+      const w2 = CARD_WIDTH * count2;
+
+      // Row 1: scroll left
+      gsap.set(track1, { x: 0 });
+      tween1 = gsap.to(track1, {
+        x: -w1,
+        duration: count1 * 5,
         ease: "none",
         repeat: -1,
         modifiers: {
-          x: gsap.utils.unitize(x => parseFloat(x) % totalWidth)
+          x: gsap.utils.unitize(x => parseFloat(x) % w1)
+        }
+      });
+
+      // Row 2: scroll right
+      gsap.set(track2, { x: 0 });
+      tween2 = gsap.to(track2, {
+        x: w2,
+        duration: count2 * 5.5,
+        ease: "none",
+        repeat: -1,
+        modifiers: {
+          x: gsap.utils.unitize(x => {
+            const v = parseFloat(x) % w2;
+            return -w2 + ((v + w2) % w2);
+          })
         }
       });
     }
 
-    async function shuffleCards() {
-      shuffleBtn.classList.add("loading");
-      if (loopTween) loopTween.pause();
+    // async function shuffleCards() {
+    //   shuffleBtn.classList.add("loading");
+    //   tween1 && tween1.pause();
+    //   tween2 && tween2.pause();
 
-      const cards = track.querySelectorAll(".ad-card");
-      await gsap.to(cards, {
-        y: 32,
-        opacity: 0,
-        scale: 0.95,
-        stagger: { each: 0.035, from: "random" },
-        duration: 0.3,
-        ease: "power2.in"
-      });
+    //   // Animate both rows out
+    //   const allCards = document.querySelectorAll(".ad-card");
+    //   await gsap.to(allCards, {
+    //     y: 28,
+    //     opacity: 0,
+    //     scale: 0.95,
+    //     stagger: { each: 0.025, from: "random" },
+    //     duration: 0.3,
+    //     ease: "power2.in"
+    //   });
 
-      const ads = await fetchAds();
-      renderCards(ads, true);
+    //   const ads = await fetchAds();
 
-      const newCards = track.querySelectorAll(".ad-card");
-      gsap.set(newCards, { y: -28, opacity: 0, scale: 0.96 });
-      await gsap.to(newCards, {
-        y: 0,
-        opacity: 1,
-        scale: 1,
-        stagger: { each: 0.055, from: "start" },
-        duration: 0.55,
-        ease: "cardIn"
-      });
+    //   // Split ads across rows so no image appears in both
+    //   const half = Math.ceil(ads.length / 2);
+    //   renderTrack(track1, ads.slice(0, half));
+    //   renderTrack(track2, ads.slice(half));
 
-      startLoop(ads.length);
-      shuffleBtn.classList.remove("loading");
-    }
+    //   // Animate both rows in
+    //   const newCards = document.querySelectorAll(".ad-card");
+    //   gsap.set(newCards, { y: -24, opacity: 0, scale: 0.96 });
+    //   await gsap.to(newCards, {
+    //     y: 0,
+    //     opacity: 1,
+    //     scale: 1,
+    //     stagger: { each: 0.04, from: "start" },
+    //     duration: 0.5,
+    //     ease: "cardIn"
+    //   });
 
-    shuffleBtn.addEventListener("click", shuffleCards);
+    //   startLoops(half, ads.length - half);
+    //   shuffleBtn.classList.remove("loading");
+    // }
 
+    // shuffleBtn.addEventListener("click", shuffleCards);
+
+    // Init
     (async () => {
       const ads = await fetchAds();
-      renderCards(ads, true);
-      const cards = track.querySelectorAll(".ad-card");
-      gsap.set(cards, { opacity: 0, y: 20 });
+      const half = Math.ceil(ads.length / 2);
+      renderTrack(track1, ads.slice(0, half));
+      renderTrack(track2, ads.slice(half));
+
+      const cards = document.querySelectorAll(".ad-card");
+      gsap.set(cards, { opacity: 0, y: 16 });
       gsap.to(cards, {
         opacity: 1,
         y: 0,
-        stagger: { each: 0.06, from: "start" },
-        duration: 0.6,
+        stagger: { each: 0.04, from: "start" },
+        duration: 0.55,
         ease: "cardIn",
-        onComplete: () => startLoop(ads.length)
+        onComplete: () => startLoops(half, ads.length - half)
       });
     })();
   </script>

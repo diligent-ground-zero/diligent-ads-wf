@@ -137,6 +137,7 @@ function updateSvgColor(svg) {
 
 function resetSvg(svg) {
   svg.dataset.clickCount = '0'
+  svg.style.transform = 'rotate(0deg)'
   svg.style.setProperty('--color-bg-faq', '#f0f0f0')
   svg.style.setProperty('--color-arrow-faq', '#1F1F1F') // Reset arrow color when closed
 }
