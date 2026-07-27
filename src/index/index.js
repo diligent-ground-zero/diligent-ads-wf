@@ -11,6 +11,7 @@ import {
 } from 'swiper/modules'
 import CookieConsent from 'vanilla-cookieconsent/dist/cookieconsent.umd.js'
 
+import initHibobPopoverTriggers from './hibob-popovers'
 import '../styles/style.css'
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -750,3 +751,5 @@ export const figmaIframeAdjust = () => {
     iframe.style.height = `${height}px`
   }
 }
+
+export const initHibobPopovers = () => initHibobPopoverTriggers()

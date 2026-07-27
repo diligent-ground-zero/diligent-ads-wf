@@ -11,6 +11,7 @@ import {
   figmaIframeAdjust,
   initStepperReferrals,
   initCopyToClipboard,
+  initHibobPopovers,
 } from './index'
 
 const getCurrentPath = () => window.location.pathname
@@ -30,6 +31,7 @@ const loadScripts = () => {
     initFaqs()
     initWhatYouGetAnimations()
     figmaIframeAdjust()
+    initHibobPopovers()
   }
 
   if (currentPath.includes('/referrals')) {

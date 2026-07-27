@@ -27,6 +27,7 @@
     "gsap": "^3.9.1",
     "split-type": "^0.3.4",
     "swiper": "^11.1.12",
+    "tippy.js": "6.3.7",
     "vanilla-cookieconsent": "3.0.1"
   }
 }
