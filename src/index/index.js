@@ -22,7 +22,6 @@ import 'swiper/css/effect-fade'
 gsap.registerPlugin(ScrollTrigger)
 
 export const initHomeSwipers = () => {
-  console.log('initHomeSwipers called');
   const swiperLoopOptions = {
     spaceBetween: 20,
     loop: false,
