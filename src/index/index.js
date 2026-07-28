@@ -24,7 +24,7 @@ gsap.registerPlugin(ScrollTrigger)
 export const initHomeSwipers = () => {
   const swiperLoopOptions = {
     spaceBetween: 20,
-    loop: false,
+    loop: true,
     allowTouchMove: false,
     slidesPerView: '4',
     centeredSlides: true,
@@ -407,7 +407,7 @@ export const initCounter = () => {
 
     // Settings that can be overridden on per-element basis, by `data-purecounter-*` attributes:
     start: 0, // Starting number [unit]
-    end: 1500, // End number [unit]
+    end: 1630, // End number [unit]
     duration: 2, // The time in seconds for the animation to complete [seconds]
     delay: 10, // The delay between each iteration (the default of 10 will produce 100 fps) [miliseconds]
     once: true, // Counting at once or recount when the element in view [boolean]
