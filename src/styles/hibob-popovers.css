@@ -1,14 +1,12 @@
 .hibob-popover {
   position: relative;
-  width: 240px;
-  padding: 20px;
+  width: 220px;
+  padding: 15px;
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 0 0 10px #d0cfcce0;
   font-family: inherit;
   text-align: left;
-  transform: scale(0.85);
-  transform-origin: top center;
 }
 .hibob-popover img {
   width: 100%;
