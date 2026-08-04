@@ -9,7 +9,7 @@
   text-align: left;
 }
 .hibob-popover img {
-  width: 100%;
+  width: 75%;
   height: auto;
   border-radius: 12px;
   display: block;
@@ -51,6 +51,11 @@
 }
 .hibob-popover-close:hover {
   background: #1f1f1f;
+}
+@media (min-width: 768px) {
+  .hibob-popover-close {
+    display: none;
+  }
 }
 .hibob-popover-testimonial {
   width: 290px;
