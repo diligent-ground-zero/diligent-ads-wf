@@ -7,9 +7,11 @@
   box-shadow: 0 0 0 10px #d0cfcce0;
   font-family: inherit;
   text-align: left;
+  transform: scale(0.75);
+  transform-origin: top center;
 }
 .hibob-popover img {
-  width: 75%;
+  width: 100%;
   height: auto;
   border-radius: 12px;
   display: block;
