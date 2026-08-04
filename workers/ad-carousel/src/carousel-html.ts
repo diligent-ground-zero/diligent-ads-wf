@@ -46,7 +46,7 @@ export function buildCarouselHtml(workerOrigin: string): string {
       will-change: transform;
     }
 
-    .ad-card {
+    .creative-card {
       flex-shrink: 0;
       width: 325px;
       height: 325px;
@@ -57,7 +57,7 @@ export function buildCarouselHtml(workerOrigin: string): string {
       box-shadow: 0 2px 8px rgba(0,0,0,0.18);
     }
 
-    .ad-card img {
+    .creative-card img {
       width: 100%;
       height: 100%;
       object-fit: cover;
@@ -67,12 +67,12 @@ export function buildCarouselHtml(workerOrigin: string): string {
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
 
-    .ad-card img.loaded {
+    .creative-card img.loaded {
       opacity: 1;
       transform: scale(1);
     }
 
-    .ad-card::after {
+    .creative-card::after {
       content: '';
       position: absolute;
       inset: 0;
@@ -131,8 +131,8 @@ export function buildCarouselHtml(workerOrigin: string): string {
 
     @media (max-width: 768px) {
       .carousel-track { gap: 8px; }
-      .ad-card { width: 163px; height: 163px; border-radius: 11px; }
-      .ad-card::after { border-radius: 11px; }
+      .creative-card { width: 163px; height: 163px; border-radius: 11px; }
+      .creative-card::after { border-radius: 11px; }
     }
   </style>
 </head>
@@ -180,7 +180,7 @@ export function buildCarouselHtml(workerOrigin: string): string {
       // Double for seamless loop
       [...ads, ...ads].forEach(ad => {
         const card = document.createElement("div");
-        card.className = "ad-card";
+        card.className = "creative-card";
         const img = document.createElement("img");
         img.src = ad.url;
         img.alt = "";
@@ -231,7 +231,7 @@ export function buildCarouselHtml(workerOrigin: string): string {
     //   tween2 && tween2.pause();
 
     //   // Animate both rows out
-    //   const allCards = document.querySelectorAll(".ad-card");
+    //   const allCards = document.querySelectorAll(".creative-card");
     //   await gsap.to(allCards, {
     //     y: 28,
     //     opacity: 0,
@@ -249,7 +249,7 @@ export function buildCarouselHtml(workerOrigin: string): string {
     //   renderTrack(track2, ads.slice(half));
 
     //   // Animate both rows in
-    //   const newCards = document.querySelectorAll(".ad-card");
+    //   const newCards = document.querySelectorAll(".creative-card");
     //   gsap.set(newCards, { y: -24, opacity: 0, scale: 0.96 });
     //   await gsap.to(newCards, {
     //     y: 0,
@@ -273,7 +273,7 @@ export function buildCarouselHtml(workerOrigin: string): string {
       renderTrack(track1, ads.slice(0, half));
       renderTrack(track2, ads.slice(half));
 
-      const cards = document.querySelectorAll(".ad-card");
+      const cards = document.querySelectorAll(".creative-card");
       gsap.set(cards, { opacity: 0, y: 16 });
       gsap.to(cards, {
         opacity: 1,

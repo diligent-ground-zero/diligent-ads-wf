@@ -4,7 +4,7 @@ import { describe, it, expect } from "vitest";
 
 describe("Image proxy", () => {
   it("returns 404 for non-existent image", async () => {
-    const res = await SELF.fetch("http://example.com/images/ads/nonexistent.png");
+    const res = await SELF.fetch("http://example.com/images/creative/nonexistent.png");
     expect(res.status).toBe(404);
   });
 
@@ -23,9 +23,9 @@ describe("Shuffle API", () => {
     expect(Array.isArray(data.ads)).toBe(true);
   });
 
-  it("responds to /api/ads as well", async () => {
+  it("no longer responds to the old /api/ads alias", async () => {
     const res = await SELF.fetch("http://example.com/api/ads");
-    expect(res.status).toBe(200);
+    expect(res.status).toBe(404);
   });
 });
 

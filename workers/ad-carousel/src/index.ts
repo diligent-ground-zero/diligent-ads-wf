@@ -4,6 +4,13 @@ export interface Env {
   ADS_BUCKET: R2Bucket;
 }
 
+// Public URL path segment for creative images. Kept separate from the R2
+// key prefix below so the external URL never contains "ads" — generic
+// ad-blocker filter lists (EasyList etc.) hide/block on that substring.
+const IMAGE_URL_PREFIX = "creative";
+// Internal R2 object key prefix (unchanged, existing bucket contents).
+const R2_KEY_PREFIX = "ads";
+
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Methods": "GET, OPTIONS",
@@ -30,11 +37,12 @@ export default {
       });
     }
 
-    if (path.startsWith("/images/")) {
-      return handleImage(path.slice("/images/".length), env);
+    if (path.startsWith(`/images/${IMAGE_URL_PREFIX}/`)) {
+      const filename = path.slice(`/images/${IMAGE_URL_PREFIX}/`.length);
+      return handleImage(`${R2_KEY_PREFIX}/${filename}`, env);
     }
 
-    if (path === "/api/shuffle" || path === "/api/ads") {
+    if (path === "/api/shuffle") {
       return handleShuffle(request.url, env);
     }
 
@@ -64,10 +72,10 @@ async function handleShuffle(requestUrl: string, env: Env): Promise<Response> {
   const url = new URL(requestUrl);
   const count = Math.min(parseInt(url.searchParams.get("count") ?? "12"), 50);
 
-  const list = await env.ADS_BUCKET.list({ prefix: "ads/" });
+  const list = await env.ADS_BUCKET.list({ prefix: `${R2_KEY_PREFIX}/` });
   const keys = list.objects
     .map((obj) => obj.key)
-    .filter((k) => k !== "ads/");
+    .filter((k) => k !== `${R2_KEY_PREFIX}/`);
 
   for (let i = keys.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));
@@ -76,7 +84,10 @@ async function handleShuffle(requestUrl: string, env: Env): Promise<Response> {
 
   const selected = keys.slice(0, Math.min(count, keys.length));
   const origin = new URL(requestUrl).origin;
-  const ads = selected.map((key) => ({ key, url: `${origin}/images/${key}` }));
+  const ads = selected.map((key) => {
+    const filename = key.slice(`${R2_KEY_PREFIX}/`.length);
+    return { key, url: `${origin}/images/${IMAGE_URL_PREFIX}/${filename}` };
+  });
 
   return new Response(JSON.stringify({ ads }), {
     headers: { ...CORS_HEADERS, "Content-Type": "application/json" },
