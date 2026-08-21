@@ -91,7 +91,7 @@ function initHibobPopoverTrigger(trigger) {
     theme: 'hibob',
     trigger: 'mouseenter click focus',
     hideOnClick: true,
-    placement: 'bottom',
+    placement: 'top',
     offset: [0, 10],
     maxWidth: 310,
     zIndex: 500,
