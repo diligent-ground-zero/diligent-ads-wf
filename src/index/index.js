@@ -522,6 +522,17 @@ export function initNavigation() {
       gsap.to(blurryBg, { opacity: 1, duration: 0.3, pointerEvents: 'auto' })
       parentWrap.style.backgroundImage = 'unset'
       centeredMenu.style.display = 'flex'
+
+      // Center the menu in the space below the navbar (which already
+      // accounts for the top banner's height), instead of a fixed pixel
+      // offset that doesn't know the navbar's actual height.
+      const navBottom = parentWrap.getBoundingClientRect().bottom
+      const availableHeight = window.innerHeight - navBottom
+      const menuHeight = centeredMenu.offsetHeight
+      const centerY =
+        navBottom + Math.max(availableHeight / 2, menuHeight / 2 + 12)
+      centeredMenu.style.top = `${centerY}px`
+
       gsap.fromTo(
         centeredMenu,
         { opacity: 0, y: 20 },
