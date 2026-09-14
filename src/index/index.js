@@ -84,6 +84,8 @@ export const initHomeSwipers = () => {
 
 export function initFaqs() {
   const faqs = document.querySelector('#faq')
+  if (!faqs) return
+
   const faqItems = faqs.querySelectorAll('.faq_accordion .faq_question')
 
   initArrowCircles(faqs)

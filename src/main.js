@@ -40,6 +40,10 @@ const loadScripts = () => {
     initCopyToClipboard()
   }
 
+  if (currentPath.includes('/report/')) {
+    initFaqs()
+  }
+
   if (
     currentPath.includes('/services/ad-design-service-for-b2b-saas') ||
     currentPath.includes('/services/gif-design-service-for-b2b-saas')
