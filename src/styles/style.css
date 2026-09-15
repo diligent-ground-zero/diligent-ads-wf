@@ -37,13 +37,8 @@ body {
 }
 
 #faq .faq_accordion.open .faq_answer {
-  max-height: 500px;
   transition: max-height 0.6s ease-out, opacity 0s ease-out;
   opacity: 1;
-}
-
-.report-article-section #faq .faq_accordion.open .faq_answer {
-  max-height: 3000px;
 }
 
 #faq .faq_accordion .faq_question {

@@ -110,8 +110,16 @@ function handleFaqClick(clickedItem, allItems) {
   const parent = clickedItem.closest('.faq_accordion')
   const isOpen = parent.classList.toggle('open')
 
+  setAnswerMaxHeight(parent, isOpen)
   updateSvg(parent.querySelector('.arrow_circle svg'), isOpen)
   closeOtherFaqs(clickedItem, allItems)
+}
+
+function setAnswerMaxHeight(accordion, isOpen) {
+  const answer = accordion.querySelector('.faq_answer')
+  if (!answer) return
+
+  answer.style.maxHeight = isOpen ? `${answer.scrollHeight}px` : ''
 }
 
 function updateSvg(svg, isOpen) {
@@ -149,6 +157,7 @@ function closeOtherFaqs(clickedItem, allItems) {
     if (item !== clickedItem) {
       const parent = item.closest('.faq_accordion')
       parent.classList.remove('open')
+      setAnswerMaxHeight(parent, false)
       resetSvg(parent.querySelector('.arrow_circle svg'))
     }
   })
