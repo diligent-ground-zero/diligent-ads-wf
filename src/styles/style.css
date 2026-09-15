@@ -50,6 +50,10 @@ body {
   transform-origin: center;
 }
 
+#faq .faq_accordion.open .plus_bar:not(.horizontal) {
+  display: none;
+}
+
 .blurry-bg {
   position: fixed;
   top: 0;
