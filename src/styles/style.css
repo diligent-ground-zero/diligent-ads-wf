@@ -42,6 +42,10 @@ body {
   opacity: 1;
 }
 
+.report-article-section #faq .faq_accordion.open .faq_answer {
+  max-height: 3000px;
+}
+
 #faq .faq_accordion .faq_question {
   transition: color 0.6s ease-in-out;
 }
