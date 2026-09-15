@@ -154,6 +154,18 @@ function closeOtherFaqs(clickedItem, allItems) {
   })
 }
 
+export function initQuoteReveal() {
+  const buttons = document.querySelectorAll('.quote-card-reveal-btn')
+  if (!buttons.length) return
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const bubble = btn.closest('.quote-card-bubble')
+      if (bubble) bubble.classList.add('revealed')
+    })
+  })
+}
+
 export const splitTextAnimation = () => {
   if (window.innerWidth > 992) {
     // createAnimation()

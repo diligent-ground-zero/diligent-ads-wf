@@ -54,6 +54,26 @@ body {
   display: none;
 }
 
+.quote-card-bubble-richtext {
+  filter: blur(4.8px);
+  opacity: 0.25;
+  transition: filter 0.4s ease-out, opacity 0.4s ease-out;
+}
+
+.quote-card-bubble.revealed .quote-card-bubble-richtext {
+  filter: blur(0);
+  opacity: 1;
+}
+
+.quote-card-highlight-overlay {
+  transition: opacity 0.3s ease-out;
+}
+
+.quote-card-bubble.revealed .quote-card-highlight-overlay {
+  opacity: 0;
+  pointer-events: none;
+}
+
 .blurry-bg {
   position: fixed;
   top: 0;

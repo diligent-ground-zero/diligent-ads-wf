@@ -12,6 +12,7 @@ import {
   initStepperReferrals,
   initCopyToClipboard,
   initHibobPopovers,
+  initQuoteReveal,
 } from './index'
 
 const getCurrentPath = () => window.location.pathname
@@ -22,6 +23,7 @@ const loadScripts = () => {
   initNavigation()
   linkedinAdsConversion()
   initCookieModal()
+  initQuoteReveal()
 
   if (currentPath === '/' || currentPath === '/home-new') {
     initTabs()
